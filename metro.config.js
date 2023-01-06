@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+  projectRoot: './src',
   transformer: {
     getTransformOptions: async () => ({
       transform: {
