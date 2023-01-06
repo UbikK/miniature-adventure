@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.miniatureadventure.app-mergeDebugResources-20:/values-be/values-be.xml",
+            "outputFile": "com.miniatureadventure.app-mergeDebugResources-27:/values-be/values-be.xml",
             "map": [
                 {
                     "source": "/home/acohen/.gradle/caches/transforms-3/63a3df243d2d102452600006144a86df/transformed/core-1.7.0/res/values-be/values-be.xml",
