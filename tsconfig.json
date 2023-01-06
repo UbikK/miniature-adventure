@@ -6,7 +6,7 @@
 
     /* Completeness */
     "skipLibCheck": true,
-    "typeRoots": ["./src/types"],
+    "typeRoots": ["./src/types", "./node_modules/types"],
                             /* Skip type checking all .d.ts files. */
   },
   "includes": ["**/*.tsx", "**/*.ts"]         
