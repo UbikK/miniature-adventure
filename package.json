@@ -3,14 +3,13 @@
   "packageManager": "yarn@3.3.1",
   "workspaces": [
     "app",
-    "server"
+    "supabase"
   ],
   "devDependencies": {
     "typescript": "^4.9.4"
   },
   "scripts": {
     "w": "workspace",
-    "server": "yarn workspace server",
     "app": "yarn workspace app"
   },
   "dependencies": {

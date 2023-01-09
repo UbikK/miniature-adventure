@@ -37,7 +37,6 @@ const App = () => {
               iconName = focused ? 'user-circle' : 'user-circle-o';
             }
 
-            // You can return any component that you like here!
             return <Icon name={iconName as string} size={size} color={color} />;
           },
           tabBarActiveTintColor: 'tomato',
