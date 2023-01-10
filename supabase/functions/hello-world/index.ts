@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import {Client, PlaceInputType} from "https://esm.sh/@googlemaps/google-maps-services-js@3"
+import {Client, PlaceInputType} from "https://esm.sh/@googlemaps/google-maps-services-js@3.3.26"
 console.log("Hello from Functions!")
 
 serve(async (req: Request) => {

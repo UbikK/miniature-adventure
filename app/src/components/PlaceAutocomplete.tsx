@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {Text, TextInput, View} from 'react-native';
-import {getAutocompletePredictions} from '../services/GooglePlaceService';
+import {
+  getAutocompletePredictions,
+  PlacePrediction,
+} from '../services/GooglePlaceService';
 
 const PlaceAutocompleteInput: React.FC = () => {
   const [predictions, setPredictions] = useState<PlacePrediction[]>();
@@ -9,7 +12,7 @@ const PlaceAutocompleteInput: React.FC = () => {
       const placesResult = await getAutocompletePredictions(text);
 
       if (typeof placesResult === 'object') {
-        // typeof an Array is 'object'...
+        // typeof an Array is 'object'🤷
         setPredictions(placesResult);
       }
     }

@@ -17,6 +17,13 @@ export enum GooglePlacesAutocompleteStatus {
   UNKNOWN_ERROR = 'ZERO_RESULTS',
 }
 
+export type PlacePrediction = {
+  description: string;
+  place_id: string;
+  reference: string;
+  types: string[];
+};
+
 export const getAutocompletePredictions: (
   input: string,
 ) => Promise<PlacePrediction[] | GooglePlacesAutocompleteStatus> = async (
