@@ -1,15 +1,20 @@
 # miniature-adventure
 
 ## Dev Local
+
 ### Setup
+
 1. Yarn
+
     ```sh
     yarn set version berry
     ```
+
 2. Add in  .yarnrc.yml
-   - ``nodeLinker: node-modules`` 
+   - ``nodeLinker: node-modules``
 
 3. Add in .gitignore
+
    ```
     .yarn/*
     !.yarn/cache
@@ -19,10 +24,13 @@
     !.yarn/sdks
     !.yarn/versions
    ```
-4. Install 
+
+4. Install
+
     ```sh
     yarn
     ```
+
 colors:
 
 - Primary/Dark fonts: #254d4c

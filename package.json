@@ -10,7 +10,8 @@
   },
   "scripts": {
     "w": "workspace",
-    "app": "yarn workspace app"
+    "app": "yarn workspace app",
+    "server": "yarn workspace supabase"
   },
   "dependencies": {
     "@react-native-community/cli": "^10.1.0"

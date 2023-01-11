@@ -7,6 +7,8 @@ import { PlacesAutocompleteInput } from '../components/PlaceAutocomplete';
 const List = () => {
   const [places, setPlaces] = useState([1]);
 
+  
+
   const renderItem = ({ item, index }: {item : any, index: number}) => (
     <ListItem item={item}/>
   );

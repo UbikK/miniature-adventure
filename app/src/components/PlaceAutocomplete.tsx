@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { generateBoxShadowStyle } from '../helpers/CssFunctions';
 import {
   getAutocompletePredictions,
@@ -12,11 +12,25 @@ import {
 
 export const PlacesAutocompleteInput: React.FC = () => {
   const [predictions, setPredictions] = useState<PlacePrediction[]>();
+  const [showPredictions, setShowPredictions] = useState(false)
+  
+  const handleSelection = (index: number) => {
+    console.info(index)
+    if (predictions) {
+      const selected = predictions[index];
+      
+    }
+  }
+
+  const resetState = () => {
+    setPredictions(undefined);
+    setShowPredictions(false);
+  }
 
   const Item = ({ description, index }: {description: string, index: number}) => (
-    <View style={styles.predictionView}>
+    <Pressable style={styles.predictionView} onPress={() => handleSelection(index)}>
       <Text style={index >= predictions!.length - 1 ? styles.lastPrediction : styles.prediction}>{description}</Text>
-    </View>
+    </Pressable>
   );
 
   const renderItem = ({ item, index }: {item : PlacePrediction, index: number}) => (
@@ -24,31 +38,44 @@ export const PlacesAutocompleteInput: React.FC = () => {
   );
   
   const handleChange = async (text: string) => {
-    console.info(text)
     if (text.length >= 3) {
       const placesResult = await getAutocompletePredictions(text);
       console.info(placesResult)
-      if (typeof placesResult === 'object') {
+      if (typeof placesResult === 'object' && placesResult.length > 0) {
         // typeof an Array is 'object'🤷
         setPredictions(placesResult);
-      }
-    }
+        
+      } 
+      setShowPredictions(true);
+    } else if (!text.length) {
+      resetState()
+    } 
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput onChangeText={(text: string) => handleChange(text)} placeholder="Recherher" placeholderTextColor='#254d4c' style={styles.input} onTouchStart={(e) => e.stopPropagation()}/>
-        <Icon name="search" size={20} color="#254d4c" style={styles.searchIcon}/>
+        <TextInput 
+          onChangeText={(text: string) => handleChange(text)} 
+          placeholder="Recherher" 
+          placeholderTextColor='#254d4c' 
+          style={styles.input} 
+          onTouchStart={(e) => e.stopPropagation()} 
+          onBlur={() => resetState()}
+        />
+        <Icon name={'search'} size={20} color="#254d4c" solid style={styles.searchIcon}/>
       </View>
-     {
-      predictions ? (
-        <SafeAreaView style={styles.predicitionList}>
-          <FlatList  data={predictions} renderItem={({item, index}) => renderItem({item, index})} keyExtractor={item => predictions.indexOf(item).toString()}/>
-        </SafeAreaView>
-          
-        
-      ) : undefined}
+      {
+        showPredictions ? (
+          <SafeAreaView style={styles.predicitionList}>
+            {
+              predictions ? 
+                <FlatList  data={predictions} renderItem={({item, index}) => renderItem({item, index})} keyExtractor={item => predictions!.indexOf(item).toString()}/> 
+              : <Text style={[styles.lastPrediction, styles.predictionView]}>Pas de résultats <Icon name={'frown'} color="#f1f1e6" solid/></Text>
+            }
+          </SafeAreaView>
+        ) : undefined
+      }
     </View>
   );
 };
@@ -97,7 +124,8 @@ const styles = StyleSheet.create({
     marginTop: '1%',
     position: 'absolute',
     zIndex: 100,
-    top: 70
+    top: 70,
+    display:'flex'
   },
   prediction: {
     color: '#f1f1e6',
