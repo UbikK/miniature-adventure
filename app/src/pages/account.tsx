@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {supabase} from '../helpers/supabase';
-import {StyleSheet, View, Alert, Button, TextInput} from 'react-native';
-import {Session} from '@supabase/supabase-js';
+import { Session } from '@supabase/supabase-js';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, StyleSheet, TextInput, View } from 'react-native';
+import { supabase } from '../helpers/supabase';
 
-export default function Account({session}: {session: Session}) {
+export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState('');
   const [website, setWebsite] = useState('');
@@ -17,7 +17,7 @@ export default function Account({session}: {session: Session}) {
           throw new Error('No user on the session!');
         }
 
-        let {data, error, status} = await supabase
+        let { data, error, status } = await supabase
           .from('profiles')
           .select('username, website, avatar_url')
           .eq('id', session?.user.id)
@@ -60,7 +60,7 @@ export default function Account({session}: {session: Session}) {
         updated_at: new Date(),
       };
 
-      let {error} = await supabase.from('profiles').upsert(updates);
+      let { error } = await supabase.from('profiles').upsert(updates);
 
       if (error) {
         throw error;

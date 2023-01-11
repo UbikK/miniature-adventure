@@ -1,12 +1,12 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import {Session} from '@supabase/supabase-js';
-import React, {useEffect, useState} from 'react';
-import Auth from './components/login';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { Session } from '@supabase/supabase-js';
+import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {supabase} from './helpers/supabase';
+import Auth from './components/login';
+import { supabase } from './helpers/supabase';
 import Account from './pages/account';
-import List from './components/List';
+import Home from './pages/Home';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +28,8 @@ const App = () => {
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({route}) => ({
+          tabBarActiveBackgroundColor: '#254d4c',
+          tabBarInactiveBackgroundColor:'#f1f1e6',
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
 
@@ -39,10 +41,18 @@ const App = () => {
 
             return <Icon name={iconName as string} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#fff7d6',
+          tabBarInactiveTintColor: '#254d4c',
         })}>
-        <Tab.Screen name="Home" component={List} />
+        <Tab.Screen 
+          name="Home" 
+          component={Home} 
+          options={{
+            headerStyle: {
+              backgroundColor: '#254d4c',
+            },
+            headerTintColor: '#f1f1e6',
+          }}/>
         <Tab.Screen name="Account">
           {props => (
             <Account key={session.user.id} session={session} {...props} />

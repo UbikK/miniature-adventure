@@ -1,7 +1,7 @@
-import {GOOGLE_MAPS_API_KEY} from '@env';
-import {getCurrentPositionAsync} from '../polyfills/Geolocation';
+import { GOOGLE_MAPS_API_KEY } from '@env';
+import { getCurrentPositionAsync } from '../polyfills/Geolocation';
 const GOOGLE_MAPS_URL =
-  'https://maps.googleapis.com/maps/api/place/autocomplete';
+  'https://maps.googleapis.com/maps/api/place/autocomplete/json';
 
 type GooglePlacesAutocompleteResponseBody = {
   status: GooglePlacesAutocompleteStatus;
@@ -24,16 +24,24 @@ export type PlacePrediction = {
   types: string[];
 };
 
+
 export const getAutocompletePredictions: (
   input: string,
 ) => Promise<PlacePrediction[] | GooglePlacesAutocompleteStatus> = async (
   input: string,
 ) => {
+  console.info('input::', input)
   const currentLoc = await getCurrentPositionAsync();
-  const url = `${GOOGLE_MAPS_URL}?output=json&key=${GOOGLE_MAPS_API_KEY}&input=${input}&origin=${currentLoc.coords.latitude},${currentLoc.coords.longitude}f&language=fr`;
-  const response = await fetch(url);
-  const body: GooglePlacesAutocompleteResponseBody = await response.json();
+  console.info('currentLoc::', JSON.stringify(currentLoc))
+  const encodedLocation = `${encodeURIComponent(currentLoc.coords.latitude + ',')}${currentLoc.coords.longitude}`
+  //&location=${encodedLocation}&radius&origin=${encodedLocation}
+  const url = `${GOOGLE_MAPS_URL}?key=${GOOGLE_MAPS_API_KEY}&input=${input}&location=${encodedLocation}&radius=1000&origin=${encodedLocation}&language=fr&types=establishment`;
+  console.info(url)
 
+  const response = await fetch(url);
+  console.info(response)
+  const body: GooglePlacesAutocompleteResponseBody = await response.json();
+  console.info(body)
   if (body.status !== GooglePlacesAutocompleteStatus.OK) {
     return body.status as GooglePlacesAutocompleteStatus;
   }

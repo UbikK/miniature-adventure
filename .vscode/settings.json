@@ -5,5 +5,9 @@
   },
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "deno.enablePaths": ["./supabase"]
+  "deno.enablePaths": [
+    "./supabase"
+  ],
+  "nuxt.isNuxtApp": false,
+  "react-native-tools.projectRoot": "./app"
 }

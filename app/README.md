@@ -23,3 +23,9 @@
     ```sh
     yarn
     ```
+colors:
+
+- Primary/Dark fonts: #254d4c
+- #00c9ca
+- light fonts: #f1f1e6
+- light backgrounds: #fff7d6

@@ -6,7 +6,6 @@ module.exports = {
       {
         moduleName: '@env',
         path: './.env',
-        verbose: true,
       },
     ],
   ],
