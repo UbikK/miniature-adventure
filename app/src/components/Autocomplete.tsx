@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { generateBoxShadowStyle } from '../helpers/CssFunctions';
+import ApiService from '../services/ApiService';
 import {
   getAutocompletePredictions,
   PlacePrediction
 } from '../services/GooglePlaceService';
+import SearchInput from './SearchInput';
 
 
 
 export const PlacesAutocompleteInput: React.FC = () => {
   const [predictions, setPredictions] = useState<PlacePrediction[]>();
-  const [showPredictions, setShowPredictions] = useState(false)
+  const [showPredictions, setShowPredictions] = useState(false);
+  const [searchTimeout, setSearchTimeout] = useState<ReturnType<typeof setTimeout>>();
   
-  const handleSelection = (index: number) => {
-    console.info(index)
+  const handleSelection = (e: any, index: number) => {
     if (predictions) {
       const selected = predictions[index];
-      
+      ApiService.getInstance().save(selected);
+      resetState();
     }
   }
 
@@ -28,7 +31,7 @@ export const PlacesAutocompleteInput: React.FC = () => {
   }
 
   const Item = ({ description, index }: {description: string, index: number}) => (
-    <Pressable style={styles.predictionView} onPress={() => handleSelection(index)}>
+    <Pressable style={styles.predictionView} onTouchEnd={(e) => handleSelection(e, index)}>
       <Text style={index >= predictions!.length - 1 ? styles.lastPrediction : styles.prediction}>{description}</Text>
     </Pressable>
   );
@@ -36,17 +39,23 @@ export const PlacesAutocompleteInput: React.FC = () => {
   const renderItem = ({ item, index }: {item : PlacePrediction, index: number}) => (
     <Item description={item.description} index={index}/>
   );
-  
-  const handleChange = async (text: string) => {
-    if (text.length >= 3) {
+
+  const searchUsingGoogle = async (text: string) => {
       const placesResult = await getAutocompletePredictions(text);
-      console.info(placesResult)
       if (typeof placesResult === 'object' && placesResult.length > 0) {
         // typeof an Array is 'object'🤷
         setPredictions(placesResult);
-        
+        setShowPredictions(true);
       } 
-      setShowPredictions(true);
+  }
+  
+  const handleChange = async (text: string) => {
+    if(searchTimeout) clearTimeout(searchTimeout);
+
+    if (text.length >= 3) {
+      setSearchTimeout(setTimeout(() => {
+        searchUsingGoogle(text);
+      }, 300))
     } else if (!text.length) {
       resetState()
     } 
@@ -54,17 +63,7 @@ export const PlacesAutocompleteInput: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput 
-          onChangeText={(text: string) => handleChange(text)} 
-          placeholder="Recherher" 
-          placeholderTextColor='#254d4c' 
-          style={styles.input} 
-          onTouchStart={(e) => e.stopPropagation()} 
-          onBlur={() => resetState()}
-        />
-        <Icon name={'search'} size={20} color="#254d4c" solid style={styles.searchIcon}/>
-      </View>
+      <SearchInput handleChange={handleChange} handleBlur={resetState}/>
       {
         showPredictions ? (
           <SafeAreaView style={styles.predicitionList}>
@@ -85,33 +84,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: '5%'
-  },
-  inputContainer: {
-    width: '90%',
-    height: 'auto',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderStyle:'solid',
-    borderColor: '#254d4c',
-    borderRadius: 50,
-    borderWidth: 1,
-    backgroundColor: '#f1f1e6'
-  },
-  searchIcon: {
-    marginRight: '5%'
-  },
-  input: {
-    width: '85%',
-    height: 'auto',
-    color:'#4b4a54',
-    marginBottom: '1%',
-    flex: 1,
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingLeft: 0,
-    marginLeft:'5%'
   },
   predicitionList: {
     ... generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717'),

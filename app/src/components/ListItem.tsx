@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 const ListItem: React.FC<any> = ({item}: {item: any}) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>An item</Text>
+            <Text style={styles.text}>{item.name}</Text>
         </View>
     )
 }

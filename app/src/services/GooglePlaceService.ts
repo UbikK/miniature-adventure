@@ -30,18 +30,13 @@ export const getAutocompletePredictions: (
 ) => Promise<PlacePrediction[] | GooglePlacesAutocompleteStatus> = async (
   input: string,
 ) => {
-  console.info('input::', input)
   const currentLoc = await getCurrentPositionAsync();
-  console.info('currentLoc::', JSON.stringify(currentLoc))
   const encodedLocation = `${encodeURIComponent(currentLoc.coords.latitude + ',')}${currentLoc.coords.longitude}`
   //&location=${encodedLocation}&radius&origin=${encodedLocation}
   const url = `${GOOGLE_MAPS_URL}?key=${GOOGLE_MAPS_API_KEY}&input=${input}&location=${encodedLocation}&radius=1000&origin=${encodedLocation}&language=fr&types=establishment`;
-  console.info(url)
 
   const response = await fetch(url);
-  console.info(response)
   const body: GooglePlacesAutocompleteResponseBody = await response.json();
-  console.info(body)
   if (body.status !== GooglePlacesAutocompleteStatus.OK) {
     return body.status as GooglePlacesAutocompleteStatus;
   }

@@ -2,11 +2,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { Session } from '@supabase/supabase-js';
 import React, { useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import Auth from './components/login';
 import { supabase } from './helpers/supabase';
 import Account from './pages/account';
 import Home from './pages/Home';
+import Search from './pages/Search';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,9 +35,11 @@ const App = () => {
             let iconName;
 
             if (route.name === 'Home') {
-              iconName = focused ? 'home' : 'home';
+              iconName = 'home';
             } else if (route.name === 'Account') {
-              iconName = focused ? 'user-circle' : 'user-circle-o';
+              iconName = 'user-circle';
+            } else if(route.name === 'Search') {
+              iconName = 'plus-square'
             }
 
             return <Icon name={iconName as string} size={size} color={color} />;
@@ -53,6 +56,11 @@ const App = () => {
             },
             headerTintColor: '#f1f1e6',
           }}/>
+          <Tab.Screen name="Search">
+          {props => (
+            <Search key={session.user.id} {...props} />
+          )}
+        </Tab.Screen>
         <Tab.Screen name="Account">
           {props => (
             <Account key={session.user.id} session={session} {...props} />
