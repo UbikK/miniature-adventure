@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"name": "✨ miniature_adventure",
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"typescript.tsdk": ".yarn/sdks/typescript/lib",
+		"typescript.enablePromptUseWorkspaceTsdk": true,
+		"deno.enable": true,
+		"deno.unstable": true,
+		"deno.lint": false
+	}
+}
