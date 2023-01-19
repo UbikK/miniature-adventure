@@ -7,14 +7,16 @@ import ApiService from '../services/ApiService';
 
 const List = () => {
   const [places, setPlaces] = useState<any[] | undefined>();
-  const [filteredPlaces, setFilteredPlaces] = useState(places);
-  
+  const [filteredPlaces, setFilteredPlaces] = useState<any[] | undefined>();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const getAllPlaces = async () => {
+    const dbPlaces = await ApiService.getInstance().getAll();
+    setPlaces(dbPlaces);
+  }
+
   useEffect(() => {
-    const getAllPlaces = async () => {
-      const dbPlaces = await ApiService.getInstance().getAll();
-      setPlaces(dbPlaces);
-    }
-    getAllPlaces();
+    getAllPlaces().catch(e => console.error(e));
   }, [])
 
   const renderItem = ({ item, index }: {item : any, index: number}) => (
@@ -27,6 +29,13 @@ const List = () => {
     } 
   }
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await getAllPlaces();
+    console.info(places)
+    setIsRefreshing(false);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -34,7 +43,7 @@ const List = () => {
       </View>
       
       <SafeAreaView style={styles.listContainer}>
-        <FlatList data={filteredPlaces} renderItem={renderItem}></FlatList>
+        <FlatList data={filteredPlaces ?? places} renderItem={renderItem} onRefresh={handleRefresh} refreshing={isRefreshing}></FlatList>
       </SafeAreaView>
      
     </View>

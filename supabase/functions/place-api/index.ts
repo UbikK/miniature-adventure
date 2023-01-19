@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { AddressComponent, AddressType, Client, Language } from "https://esm.sh/@googlemaps/google-maps-services-js@3.3.26";
+import { AddressComponent, AddressType } from "https://esm.sh/@googlemaps/google-maps-services-js@3.3.26";
 import { createClient, SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.4.0";
 
 const corsHeaders = {
@@ -10,9 +10,13 @@ const corsHeaders = {
 const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place';
 
 const getAllPointsOfInterest = async (supabaseClient: SupabaseClient) => {
-  const { data: places, error } = await supabaseClient.from('point_of_interest').select('*')
-  if (error) throw error
 
+  const { data: places, error } = await supabaseClient.from('point_of_interest').select('*').eq('user_id', (await supabaseClient.auth.getUser()).data.user?.id )
+  console.error(error);
+  console.info(places)
+  
+  if (error) throw error
+  
   return new Response(JSON.stringify({ places }), {
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     status: 200,
@@ -21,55 +25,70 @@ const getAllPointsOfInterest = async (supabaseClient: SupabaseClient) => {
 
 const savePlace = async (supabaseClient: SupabaseClient, id: string) => {
   
-  const googlePlacesClient = new Client();
+  try {
+    const response = await fetch(`${GOOGLE_PLACES_API_URL}?place_id=${id}&fields=address_components,geometry/location,name,photo&language=fr&key=${Deno.env.get('GOOGLE_MAPS_API_KEY')}`)
 
-  const detailsResponse =await googlePlacesClient.placeDetails({
-    params:{
-      place_id:id,
-      key: Deno.env.get('GOOGLE_MAPS_API_KEY') ?? '',
-      fields: ['address_components','geometry/location','name','photo'],
-      language: Language.fr,
+    const detailsResponse = await response.json();
+
+  
+    if (detailsResponse.status !== 'OK') {
+      throw new Error(detailsResponse.statusText);
     }
-  });
+  
+    const addressComponents = detailsResponse.result.address_components;
+    const address: Address = {
+      street: `${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.street_number))?.long_name} ${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.route))?.long_name}`,
+      zipcode: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.postal_code))!.long_name,
+      city: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.locality))!.long_name ?? addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.administrative_area_level_2))!.long_name,
+      country: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.country))!.long_name,
+    };
 
-  if (detailsResponse.status !== 200) {
-    throw new Error(detailsResponse.statusText);
+    const savedAddresses: Address[]| null = (await supabaseClient.from('address')
+      .select('id, street, zipcode, city, country')
+      .eq('street', address.street)
+      .eq('zipcode', address.zipcode)
+      .eq('city', address.city)
+      .eq('country', address.country)).data
+
+    let savedAddress = savedAddresses && savedAddresses[0];
+
+    if(!savedAddress) {
+      const { error: addressError, data } = await supabaseClient.from('address').insert(address).select<"*", Address>();
+      console.error(addressError)
+      console.info(data)
+      if (addressError) throw addressError;
+      savedAddress = data[0]
+    }
+  
+    console.info(savedAddress)
+    
+    const place: Place = {
+      place_id: id,
+      coordinates: `${detailsResponse.result.geometry!.location.lat},${detailsResponse.result.geometry!.location.lat}`,
+      address_id: savedAddress?.id as string,
+      name: detailsResponse.result.name!,
+      photo_id: detailsResponse.result.photos![0].photo_reference,
+      user_id:(await supabaseClient.auth.getUser()).data.user!.id
+    };
+  
+  
+    const { error } = await supabaseClient.from('point_of_interest').insert(place);
+    console.error(error)
+    if (error) throw error;
+  
+    return new Response(JSON.stringify({ place }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    });
+  } catch(e) {
+    console.error(e)
+    throw e;
   }
-
-  const addressComponents = detailsResponse.data.result.address_components;
-  const address: Address = {
-    street: `${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.street_number))?.long_name} ${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.route))?.long_name}`,
-    zipcode: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.postal_code))!.long_name,
-    city: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.locality))!.long_name ?? addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.administrative_area_level_2))!.long_name,
-    country: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.country))!.long_name,
-  };
-
-  const { error: addressError, data: savedAddress } = await supabaseClient.from('address').insert(address).select<"*", Address>();
-  if (addressError) throw addressError;
-
-  const place: Place = {
-    place_id: id,
-    coordinates: `${detailsResponse.data.result.geometry!.location.lat},${detailsResponse.data.result.geometry!.location.lat}`,
-    address_id: savedAddress[0].id as string,
-    name: detailsResponse.data.result.name!,
-    photo_id: detailsResponse.data.result.photos![0].photo_reference,
-    user_id:(await supabaseClient.auth.getUser()).data.user!.id
-  };
-
-
-  const { error } = await supabaseClient.from('point_of_interest').insert(place);
-  if (error) throw error;
-
-  return new Response(JSON.stringify({ place }), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    status: 200,
-  });
 }
 
 serve(async (req: Request) => {
   console.info('Hello API')
-  const {url, method} = req;
-
+  const { data, method } = await req.json()
   if (method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -84,16 +103,6 @@ serve(async (req: Request) => {
     { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
   )
 
-  const taskPattern = new URLPattern({ pathname: '/places/:id' });
-  const matchingPath = taskPattern.exec(url);
-  const id = matchingPath ? matchingPath.pathname.groups.id : null;
-
-    let place;
-    if (method === 'PUT') {
-      const body = await req.json()
-      place = body.task
-    }
-
     // call relevant method based on method and id
     switch (method) {
       // case id && method === 'GET':
@@ -103,7 +112,7 @@ serve(async (req: Request) => {
       // case id && method === 'DELETE':
       //   return deleteTask(supabaseClient, id as string)
       case 'POST':
-        return savePlace(supabaseClient, id as string)
+        return savePlace(supabaseClient, data.id as string)
       // case method === 'GET':
       //   return getAllTasks(supabaseClient)
       default:

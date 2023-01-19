@@ -42,3 +42,9 @@ export const getAutocompletePredictions: (
   }
   return body.predictions;
 };
+
+export const getPhoto = async (photoId: string) => {
+  const response = await fetch(`https://maps.googleapis.com/maps/api/place/photo?photo_reference=${photoId}&key=${GOOGLE_MAPS_API_KEY}`);
+
+  return await response.blob();
+}

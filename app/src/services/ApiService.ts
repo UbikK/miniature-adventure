@@ -19,23 +19,27 @@ export default class ApiService {
     }
 
     public getAll = async () => {
-        const response = await fetch(`${API_URL}/functions/v1/place-api`);
-
-        return response.json();
-    }
-    
-    public save = async (place: PlacePrediction) => {
-        console.info(API_URL)
         try {
-            const result = await supabase.functions.invoke('save-place', {
-                body: { id:place.place_id }
-              })
-    
-            return result
+            const {error, data} = await supabase.functions.invoke('place-api', {body: {method: 'GET'}})
+            if(error) throw error
+            console.info(data)
+            return data.places
         } catch(e) {
             console.error(e)
         }
-        ;
+    }
+    
+    public save = async (place: PlacePrediction) => {
+        try {
+            const {error, data} = await supabase.functions.invoke('place-api', {
+                body: { id:place.place_id },
+              })
+            if(error) throw error
+            return data
+        } catch(e) {
+            console.error(e)
+        }
+        
     }
 }
 
