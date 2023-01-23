@@ -1,11 +1,12 @@
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ListItem from '../components/ListItem';
 import SearchInput from '../components/SearchInput';
 import ApiService from '../services/ApiService';
 
-const List = () => {
+const Home: React.FC<{navigation: BottomTabNavigationProp}> = ({navigation}) => {
   const [places, setPlaces] = useState<any[] | undefined>();
   const [filteredPlaces, setFilteredPlaces] = useState<any[] | undefined>();
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -14,6 +15,10 @@ const List = () => {
     const dbPlaces = await ApiService.getInstance().getAll();
     setPlaces(dbPlaces);
   }
+
+  useEffect(() => {
+    navigation.addL
+  }, [navigation])
 
   useEffect(() => {
     getAllPlaces().catch(e => console.error(e));
@@ -43,13 +48,21 @@ const List = () => {
       </View>
       
       <SafeAreaView style={styles.listContainer}>
-        <FlatList data={filteredPlaces ?? places} renderItem={renderItem} onRefresh={handleRefresh} refreshing={isRefreshing}></FlatList>
+        {
+          ((!places || places.length === 0) || (filteredPlaces && filteredPlaces.length === 0)) ?
+          <View  style={styles.noResultsView}>
+            <Text style={styles.noResultsText}>Rien à afficher :'(</Text>
+          </View>
+          : <FlatList data={filteredPlaces ?? places} renderItem={renderItem} onRefresh={handleRefresh} refreshing={isRefreshing}></FlatList>
+
+        }
+        
       </SafeAreaView>
      
     </View>
   );
 };
-export default List;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
@@ -63,5 +76,13 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: '2%'
+  },
+  noResultsView: {
+    
+    alignItems: 'center',
+    justifyItems: 'center'
+  },
+  noResultsText: {
+    color: '#4b4a54',
   }
 })

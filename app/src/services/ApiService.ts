@@ -1,4 +1,3 @@
-import { API_URL } from "@env";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { supabase } from "../helpers/supabase";
 import { PlacePrediction } from "./GooglePlaceService";
@@ -30,9 +29,10 @@ export default class ApiService {
     }
     
     public save = async (place: PlacePrediction) => {
+        console.info('api place::', place)
         try {
             const {error, data} = await supabase.functions.invoke('place-api', {
-                body: { id:place.place_id },
+                body: { data: { id:place.place_id }, method:'POST' },
               })
             if(error) throw error
             return data

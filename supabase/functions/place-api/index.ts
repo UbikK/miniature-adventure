@@ -7,7 +7,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey',
 }
 
-const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place';
+const GOOGLE_PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place/details/json';
 
 const getAllPointsOfInterest = async (supabaseClient: SupabaseClient) => {
 
@@ -26,8 +26,10 @@ const getAllPointsOfInterest = async (supabaseClient: SupabaseClient) => {
 const savePlace = async (supabaseClient: SupabaseClient, id: string) => {
   
   try {
+    const url = `${GOOGLE_PLACES_API_URL}?place_id=${id}&fields=address_components,geometry/location,name,photo&language=fr&key=${Deno.env.get('GOOGLE_MAPS_API_KEY')}`
+    console.info(url)
     const response = await fetch(`${GOOGLE_PLACES_API_URL}?place_id=${id}&fields=address_components,geometry/location,name,photo&language=fr&key=${Deno.env.get('GOOGLE_MAPS_API_KEY')}`)
-
+    console.info(response)
     const detailsResponse = await response.json();
 
   
@@ -88,7 +90,8 @@ const savePlace = async (supabaseClient: SupabaseClient, id: string) => {
 
 serve(async (req: Request) => {
   console.info('Hello API')
-  const { data, method } = await req.json()
+  const { data, method } = await req.json();
+
   if (method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
