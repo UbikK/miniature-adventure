@@ -6,8 +6,11 @@
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "deno.enablePaths": [
-    "./supabase"
+    "./supabase",
+    "./server"
   ],
   "nuxt.isNuxtApp": false,
-  "react-native-tools.projectRoot": "./app"
+  "react-native-tools.projectRoot": "./app",
+  "deno.config": "./server/deno.json",
+  "deno.importMap": "./deno.json"
 }

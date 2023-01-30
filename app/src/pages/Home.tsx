@@ -1,4 +1,5 @@
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { ParamListBase } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,7 +7,7 @@ import ListItem from '../components/ListItem';
 import SearchInput from '../components/SearchInput';
 import ApiService from '../services/ApiService';
 
-const Home: React.FC<{navigation: BottomTabNavigationProp}> = ({navigation}) => {
+const Home: React.FC<{navigation: BottomTabNavigationProp<ParamListBase>}> = ({navigation}) => {
   const [places, setPlaces] = useState<any[] | undefined>();
   const [filteredPlaces, setFilteredPlaces] = useState<any[] | undefined>();
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -17,7 +18,7 @@ const Home: React.FC<{navigation: BottomTabNavigationProp}> = ({navigation}) => 
   }
 
   useEffect(() => {
-    navigation.addL
+    navigation.addListener('focus', handleRefresh)
   }, [navigation])
 
   useEffect(() => {
