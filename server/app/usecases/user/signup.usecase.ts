@@ -1,4 +1,5 @@
 import IUseCase from "../../../domain/UseCase.interface.ts";
+import User from "../../../domain/user/user.model.ts";
 import { IUserAdapter } from "../../../domain/user/userAdapter.interface.ts";
 
 export default class SignUpUseCase implements IUseCase{
@@ -7,7 +8,7 @@ export default class SignUpUseCase implements IUseCase{
      */
     constructor(private adapter: IUserAdapter) {}
 
-    execute: (userInfos: {email: string, password: string}) => void = (userInfos) => {
+    execute: (userInfos: {email: string, password: string, googleInfos?: any}) => Promise<User> = async (userInfos) => {
         return this.adapter.signUpUser(userInfos);
     };
 }

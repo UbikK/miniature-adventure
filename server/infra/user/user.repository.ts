@@ -15,16 +15,36 @@ export default class UserRepository implements IRepository<UserEntity, User>{
 
     save = async (data: UserEntity) => {
         const hashed = await hash(data.password as string);
+
+        console.info(`
+        insert into public.user (
+            firstname, lastname, email, password, googleinfos
+          ) values (
+            ${data.firstName ?? data.googleInfos?.user.givenName ?? null},
+            ${data.lastName ?? data.googleInfos?.user.familyName ?? null}, 
+            ${data.email}, 
+            ${hashed?? null}, 
+            ${JSON.stringify(data.googleInfos) ?? null}
+          )
+        
+          returning *
+    `)
         const result = await this.db`
-            insert into users (
-                firstname, lastname, email, password
+            insert into public.user (
+                firstname, lastname, email, password, googleinfos
               ) values (
-                ${data.firstName}, ${data.lastName}, ${data.email}, ${hashed}
+                ${data.firstName ?? data.googleInfos?.user.givenName ?? null},
+                ${data.lastName ?? data.googleInfos?.user.familyName ?? null}, 
+                ${data.email}, 
+                ${hashed?? null}, 
+                ${JSON.stringify(data.googleInfos) ?? null}
               )
             
               returning *
         `
-        return UserSchema.parse(result);
+
+        console.info(result)
+        return UserSchema.parse(result[0]);
     }
 
     getByAttribute = async (attr: keyof UserEntity, value: string) => {
@@ -32,7 +52,8 @@ export default class UserRepository implements IRepository<UserEntity, User>{
             select * from public.user where ${this.db(attr)} = ${value};
         `
 
-        console.info(result)
+        console.info('getByAttribute', result)
+        if(!result.length) return;
         return UserSchema.parse(result[0])        
     }
 

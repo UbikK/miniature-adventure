@@ -9,13 +9,14 @@ type Body = {
     password: string;
 }
 
-userRouter.post('/signup', async (ctx) => {
+userRouter.post('/', async (ctx) => {
+    console.info('hello post')
     const {value}: BodyJson = ctx.request.body({type: 'json'});
 
     const body: Body = await value;
-
-    new SignUpController().execute(body);
-    return;
+    const user = await new SignUpController().execute(body);
+    console.info('user', user)
+    return user;
 })
 
 userRouter.get('/:email', async (ctx) => {

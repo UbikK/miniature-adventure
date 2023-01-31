@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.miniatureadventure.app-mergeDebugResources-29:/values-port/values-port.xml",
+            "outputFile": "com.miniatureadventure.app-mergeDebugResources-30:/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "/Users/alberic/.gradle/caches/transforms-3/1b40e4574e76bff5831ef4bf4270480d/transformed/appcompat-1.4.1/res/values-port/values-port.xml",
+                    "source": "/Users/alberic/.gradle/caches/transforms-3/362e4b8942ccec6f86db874e55aa48a2/transformed/appcompat-1.4.1/res/values-port/values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
