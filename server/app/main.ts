@@ -1,5 +1,5 @@
 import { Application } from "oak";
-import userRouter from "./routes/users/router.ts";
+import globalRouter from "./routes/router.ts";
 
 const app = new Application();
 
@@ -12,6 +12,5 @@ app.addEventListener("listen", ({ hostname, port, secure }) => {
     );
   });
   
-app.use(userRouter.routes());
-app.use(userRouter.allowedMethods());
+app.use(globalRouter.routes());
 await app.listen({port: 3333});

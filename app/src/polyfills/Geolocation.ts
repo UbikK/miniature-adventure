@@ -12,10 +12,6 @@ export const getCurrentPositionAsync: () => Promise<GeoPosition> = () => {
     ) => {
       if (Platform.OS === 'ios') {
         Geolocation.requestAuthorization('whenInUse');
-      //   Geolocation.setRNConfiguration({
-      //     skipPermissionRequests: false,
-      //    authorizationLevel: 'whenInUse',
-      //  });
       }
     
       if (Platform.OS === 'android') {

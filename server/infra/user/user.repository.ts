@@ -16,45 +16,32 @@ export default class UserRepository implements IRepository<UserEntity, User>{
     save = async (data: UserEntity) => {
         const hashed = await hash(data.password as string);
 
-        console.info(`
-        insert into public.user (
-            firstname, lastname, email, password, googleinfos
-          ) values (
-            ${data.firstName ?? data.googleInfos?.user.givenName ?? null},
-            ${data.lastName ?? data.googleInfos?.user.familyName ?? null}, 
-            ${data.email}, 
-            ${hashed?? null}, 
-            ${JSON.stringify(data.googleInfos) ?? null}
-          )
-        
-          returning *
-    `)
         const result = await this.db`
             insert into public.user (
                 firstname, lastname, email, password, googleinfos
               ) values (
-                ${data.firstName ?? data.googleInfos?.user.givenName ?? null},
-                ${data.lastName ?? data.googleInfos?.user.familyName ?? null}, 
+                ${data.firstname ?? data.googleinfos?.user.givenName ?? null},
+                ${data.lastname ?? data.googleinfos?.user.familyName ?? null}, 
                 ${data.email}, 
                 ${hashed?? null}, 
-                ${JSON.stringify(data.googleInfos) ?? null}
+                ${JSON.stringify(data.googleinfos) ?? null}
               )
             
               returning *
         `
-
-        console.info(result)
-        return UserSchema.parse(result[0]);
+        return UserSchema.parse({...result[0], googleinfos: JSON.parse(result[0].googleinfos)});
     }
 
     getByAttribute = async (attr: keyof UserEntity, value: string) => {
-        const result: UserEntity[] = await this.db<UserEntity[]>`
-            select * from public.user where ${this.db(attr)} = ${value};
+        const result: any[] = await this.db<UserEntity[]>`
+            select id, firstname, lastname, email, password, googleinfos::jsonb from public.user where ${this.db(attr)} = ${value};
         `
 
         console.info('getByAttribute', result)
         if(!result.length) return;
-        return UserSchema.parse(result[0])        
+        const formattedResult = {...result[0], googleinfos: JSON.parse(result[0].googleinfos)}
+        console.info(formattedResult)
+        return UserSchema.parse(formattedResult)
     }
 
     convertToDomain = (data: UserEntity) => {

@@ -1,22 +1,34 @@
+import { GOOGLE_SIGNIN_CLIENT_ID } from '@env';
 import { useHookstate } from '@hookstate/core';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { globalState } from './helpers/state';
+import Account from './pages/Account';
 import Home from './pages/Home';
-import Auth from './pages/Login';
+GoogleSignin.configure({
+  webClientId: GOOGLE_SIGNIN_CLIENT_ID,
+  scopes: [
+    'email',
+    'openid'
+  ]
+});
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
   const state = useHookstate(globalState);
 
-console.info(state.userInfos)
-  return state.userInfos !== undefined ? (
+  useEffect(() => {
+    GoogleSignin.isSignedIn().then(isSignedIn => state.set({isSignedIn}))
+  }, [])
+
+  return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName={state.isSignedIn.value ? "Home" : "Account"}
         screenOptions={({route}) => ({
           tabBarActiveBackgroundColor: '#254d4c',
           tabBarInactiveBackgroundColor:'#f1f1e6',
@@ -52,14 +64,12 @@ console.info(state.userInfos)
         </Tab.Screen> */}
         <Tab.Screen name="Account">
           {props => (
-            <Auth/>
+            <Account/>
           )}
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
-  ) : (
-    <Auth />
-  );
+  ) 
 };
 
 export default App;

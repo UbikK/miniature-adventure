@@ -1,10 +1,10 @@
 export default class User {
-    constructor({email, id, lastName, firstName, googleInfos}: {email: string, lastName?: string, firstName?: string, id?: string, googleInfos?: any |undefined}){
+    constructor({email, id, lastname, firstname, googleinfos}: {email: string, lastname?: string, firstname?: string, id?: string, googleinfos?: any |undefined}){
         this._email = email;
         this._id = id;
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._googleInfos = googleInfos
+        this._firstName = firstname;
+        this._lastName = lastname;
+        this._googleInfos = googleinfos
     }
 
     private _id?: string
@@ -12,12 +12,15 @@ export default class User {
     private _firstName?: string | undefined;
     private _email?: string | undefined;
     private _googleInfos?: any | undefined;
-  public get googleInfos_1(): any | undefined {
-    return this._googleInfos;
-  }
-  public set googleInfos_1(value: any | undefined) {
-    this._googleInfos = value;
-  }
+  
+  
+    public get googleInfos(): any | undefined {
+        return this._googleInfos;
+    }
+
+    public set googleInfos(value: any | undefined) {
+        this._googleInfos = value;
+    }
   
     
     public get id() {

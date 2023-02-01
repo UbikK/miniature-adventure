@@ -6,12 +6,10 @@ export default class UserAdapter implements IUserAdapter {
     /**
      *
      */
-    constructor(private repo: UserRepository) {        
-    }
+    constructor(private repo: UserRepository) {}
+    
     signUpUser = async(userInfos: UserEntity) => {
-        console.info(userInfos)
         let dbUser: UserEntity | undefined = await this.repo.getByAttribute('email', userInfos.email);
-        console.info('dbUser', dbUser);
 
         if(!dbUser) {
            dbUser = await this.repo.save(userInfos);

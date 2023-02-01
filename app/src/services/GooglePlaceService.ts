@@ -32,7 +32,7 @@ export const getAutocompletePredictions: (
 ) => {
   const currentLoc = await getCurrentPositionAsync();
   const encodedLocation = `${encodeURIComponent(currentLoc.coords.latitude + ',')}${currentLoc.coords.longitude}`
-  //&location=${encodedLocation}&radius&origin=${encodedLocation}
+
   const url = `${GOOGLE_MAPS_URL}?key=${GOOGLE_MAPS_API_KEY}&input=${input}&location=${encodedLocation}&radius=1000&origin=${encodedLocation}&language=fr&types=establishment`;
 
   const response = await fetch(url);
