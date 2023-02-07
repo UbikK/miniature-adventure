@@ -5,8 +5,8 @@ import { UserEntity, UserSchema } from "./user.entity.ts";
 
 export default class UserRepository implements IRepository<UserEntity, User>{
     constructor(private db: any) {}
-    getById = async (id: string) => {
-        const result = await this.db`
+    findById = async (id: string) => {
+        const result = await this.db<UserEntity[]>`
             select * from public.user where id = ${id}
         `
         return UserSchema.parse(result)
@@ -16,7 +16,7 @@ export default class UserRepository implements IRepository<UserEntity, User>{
     save = async (data: UserEntity) => {
         const hashed = await hash(data.password as string);
 
-        const result = await this.db`
+        const result = await this.db<UserEntity[]>`
             insert into public.user (
                 firstname, lastname, email, password, googleinfos
               ) values (
@@ -32,19 +32,15 @@ export default class UserRepository implements IRepository<UserEntity, User>{
         return UserSchema.parse({...result[0], googleinfos: JSON.parse(result[0].googleinfos)});
     }
 
-    getByAttribute = async (attr: keyof UserEntity, value: string) => {
+    findByAttribute = async (attr: keyof UserEntity, value: string) => {
         const result: any[] = await this.db<UserEntity[]>`
             select id, firstname, lastname, email, password, googleinfos::jsonb from public.user where ${this.db(attr)} = ${value};
         `
 
-        console.info('getByAttribute', result)
         if(!result.length) return;
         const formattedResult = {...result[0], googleinfos: JSON.parse(result[0].googleinfos)}
-        console.info(formattedResult)
         return UserSchema.parse(formattedResult)
     }
 
-    convertToDomain = (data: UserEntity) => {
-        return new User(data);
-    };
+  
 }

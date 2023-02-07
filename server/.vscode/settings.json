@@ -1,5 +1,7 @@
 {
     "nuxt.isNuxtApp": false,
     "deno.enable": true,
-    "deno.importMap": "./imports.json"
+    "deno.importMap": "./imports.json",
+    "deno.enablePaths": ["../"],
+    "deno.lint": true,
 }

@@ -1,9 +1,9 @@
 import { hookstate } from "@hookstate/core";
-import { User } from "@react-native-google-signin/google-signin";
+import { PointOfInterest, User } from "../types/domain";
 
 type State = {
     userInfos?: User,
-    places?: any,
+    places?: PointOfInterest[],
     isSignedIn: boolean
 }
 
