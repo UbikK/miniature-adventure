@@ -13,3 +13,5 @@ node_modules
 **/*.env
 local_infos.md
 postgres-data
+app/android/.gradle
+app/ios
