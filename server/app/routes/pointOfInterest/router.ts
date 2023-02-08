@@ -18,7 +18,8 @@ poiRouter.post('/', async (ctx) => {
 
 poiRouter.get('/user/:id', async (ctx) => {
     const userId = ctx.params.id;
-    const list = new GetListPointOfInterestUseCase(
+
+    const list = await new GetListPointOfInterestUseCase(
         new PointOfInterestAdapter(
             new PointOfInterestRepository(sql),
             new AddressRepository(sql),
@@ -26,6 +27,7 @@ poiRouter.get('/user/:id', async (ctx) => {
             new GoogleService()
         )
     ).execute(userId);
+
     ctx.response.body = list;
 });
 

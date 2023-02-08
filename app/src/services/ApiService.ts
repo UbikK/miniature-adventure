@@ -1,15 +1,17 @@
 import { API_URL } from "@env";
-import { User } from "@react-native-google-signin/google-signin";
+import { User as GoogleUser } from '@react-native-google-signin/google-signin';
+import { User } from "../types/domain";
 import { PlacePrediction } from "./GooglePlaceService";
 
 export const getAll = async (userId: string) => {
+  console.info('userId', userId)
   try {
-    const response = await fetch(`${API_URL}/poi/${userId}`, {
+    const response = await fetch(`${API_URL}/poi/user/${userId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     const result = await response.json();
-
+    console.info('result', result)
     return result;
   } catch (e) {
     console.error(e);
@@ -32,7 +34,7 @@ export const save = async (place: PlacePrediction) => {
   }
 };
 
-export const saveUser = async (userInfos: User) => {
+export const saveUser = async (userInfos: GoogleUser) => {
   try {
     const response = await fetch(`${API_URL}/users/`, {
       method: "POST",
@@ -49,3 +51,17 @@ export const saveUser = async (userInfos: User) => {
     console.info(e);
   }
 };
+
+export const getUser = async (email: string) => {
+  try {
+    console.info('email', email)
+    const response = await fetch(`${API_URL}/users/${email}`);
+
+    const result = await response.json();
+
+    return new User(result);
+  }catch (e) {
+    console.error(e)
+  }
+  
+}

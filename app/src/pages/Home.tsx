@@ -6,7 +6,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItem from "../components/ListItem";
 import SearchInput from "../components/SearchInput";
-import { globalState } from "../helpers/state";
+import { globalstate } from "../helpers/state";
 import { getAll } from "../services/ApiService";
 import { PointOfInterest } from "../types/domain";
 
@@ -18,11 +18,13 @@ const Home: React.FC<{ navigation: BottomTabNavigationProp<ParamListBase> }> = (
     PointOfInterest[] | undefined
   >();
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const state = useHookstate(globalState);
+  const state = useHookstate(globalstate);
 
   const getAllPlaces = async () => {
-    const dbPlaces = await getAll(state.userInfos?.get()?.id);
-    setPlaces(dbPlaces);
+    if (state.userInfos?.get()) {
+      const dbPlaces = await getAll(state.userInfos?.get()?.id);
+      setPlaces(dbPlaces);
+    }
   };
 
   useEffect(() => {
@@ -49,6 +51,10 @@ const Home: React.FC<{ navigation: BottomTabNavigationProp<ParamListBase> }> = (
     console.info(places);
     setIsRefreshing(false);
   };
+
+  if (state.promised) {
+    return <Text>Loading</Text>;
+  }
 
   return (
     <View style={styles.container}>

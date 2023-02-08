@@ -31,7 +31,7 @@ export default class UserRepository implements IRepository<UserEntity, User>{
         return UserSchema.parse({...result[0], googleinfos: JSON.parse(result[0].googleinfos)});
     }
 
-    findByAttribute = async (attr: keyof UserEntity, value: string) => {
+    findByAttribute = async ({attr, value}: {attr: keyof UserEntity, value: string}) => {
         const result: any[] = await this.db<UserEntity[]>`
             select id, firstname, lastname, email, password, googleinfos::jsonb from public.user where ${this.db(attr)} = ${value};
         `
@@ -40,6 +40,4 @@ export default class UserRepository implements IRepository<UserEntity, User>{
         const formattedResult = {...result[0], googleinfos: JSON.parse(result[0].googleinfos)}
         return UserSchema.parse(formattedResult)
     }
-
-  
 }

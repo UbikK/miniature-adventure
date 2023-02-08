@@ -44,4 +44,14 @@ export default class User {
     public set firstName(value: string | undefined) {
         this._firstName = value;
     }
+
+    public get dto() {
+        return {
+            id: this._id,
+            lastName: this._lastName,
+            firstName: this._firstName,
+            email: this._email,
+            googleInfos: this._googleInfos
+        } 
+    }
 }
