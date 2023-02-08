@@ -1,5 +1,4 @@
-import Address from "../../domain/address/address.model.ts";
-import IAddressAdapter from "../../domain/address/addressAdapter.interface.ts";
+import { Address, IAddressAdapter } from "domain";
 import AddressRepository from "./address.repository.ts";
 
 export default class AddressAdapter implements IAddressAdapter {

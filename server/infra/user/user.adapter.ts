@@ -1,5 +1,4 @@
-import User from "../../domain/user/user.model.ts";
-import { IUserAdapter } from "../../domain/user/userAdapter.interface.ts";
+import { IUserAdapter, User } from "domain";
 import { UserEntity } from "./user.entity.ts";
 import UserRepository from "./user.repository.ts";
 

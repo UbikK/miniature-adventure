@@ -1,10 +1,8 @@
-import PointOfInterest from "../../../domain/pointOfInterest/poi.model.ts";
-import IPointOfInterestAdapter from "../../../domain/pointOfInterest/poiAdapter.interface.ts";
-import IUseCase from "../../../domain/UseCase.ts";
+import { IPointOfInterestAdapter, IUseCase, PointOfInterest } from "domain";
 
-export default class GetListPointOfInterestUseCase extends IUseCase {
+
+export default class GetListPointOfInterestUseCase implements IUseCase {
     constructor(private adapter: IPointOfInterestAdapter) {
-        super();
     }
 
     execute: (userId: string) => Promise<PointOfInterest[]> = (userId) => {

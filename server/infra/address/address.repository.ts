@@ -1,6 +1,5 @@
+import { Address, IRepository } from "domain";
 import postgres from "postgresjs";
-import Address from "../../domain/address/address.model.ts";
-import IRepository from "../../domain/Repository.interface.ts";
 import { AddressEntity, AddressSchema } from "./address.entity.ts";
 
 export default class AddressRepository implements IRepository<AddressEntity, Address> {

@@ -1,5 +1,4 @@
-import PointOfInterest from "../../domain/pointOfInterest/poi.model.ts";
-import IRepository from "../../domain/Repository.interface.ts";
+import { IRepository, PointOfInterest } from "domain";
 import { PointOfInterestEntity, PointOfInterestSchema } from "./poi.entity.ts";
 
 export default class PointOfInterestRepository

@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-env --unstable --allow-net --import-map=imports.json ./app/main.ts",
+    "gen-types": "deno bundle ./mod.ts ../app/src/types/domain.ts"
+  }
+}

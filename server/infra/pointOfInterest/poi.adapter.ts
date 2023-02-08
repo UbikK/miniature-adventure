@@ -1,7 +1,5 @@
-import Address from "../../domain/address/address.model.ts";
-import PointOfInterest from "../../domain/pointOfInterest/poi.model.ts";
-import IPointOfInterestAdapter from "../../domain/pointOfInterest/poiAdapter.interface.ts";
-import User from "../../domain/user/user.model.ts";
+
+import { Address, IPointOfInterestAdapter, PointOfInterest, User } from "domain";
 import { AddressEntity } from "../address/address.entity.ts";
 import AddressRepository from "../address/address.repository.ts";
 import UserRepository from '../user/user.repository.ts';

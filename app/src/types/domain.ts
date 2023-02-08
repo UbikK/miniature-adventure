@@ -119,4 +119,4 @@ class User {
         this._firstName = value;
     }
 }
-export { PointOfInterest as PointOfInterest, User as User, Address as Address };
+export { User as User, Address as Address, PointOfInterest as PointOfInterest };

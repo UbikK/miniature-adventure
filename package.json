@@ -3,15 +3,14 @@
   "packageManager": "yarn@3.3.1",
   "workspaces": [
     "app",
-    "supabase"
+    "server"
   ],
   "devDependencies": {
     "typescript": "^4.9.4"
   },
   "scripts": {
     "w": "workspace",
-    "app": "yarn workspace app",
-    "server": "yarn workspace supabase"
+    "app": "yarn workspace app"
   },
   "dependencies": {
     "@react-native-community/cli": "^10.1.0"

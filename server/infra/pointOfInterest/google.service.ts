@@ -1,6 +1,5 @@
+import { Address, IInformationService } from 'domain';
 import { AddressComponent, AddressType, PlaceDetailsResponse } from 'maps';
-import Address from '../../domain/address/address.model.ts';
-import IInformationService from "../../domain/pointOfInterest/informationService.interface.ts";
 
 export default class GoogleService implements IInformationService {
     private readonly SERVICE_API_URL = 'https://maps.googleapis.com/maps/api/place/details/json';

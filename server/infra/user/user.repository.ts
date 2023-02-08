@@ -1,6 +1,5 @@
 import { hash } from 'bcrypt';
-import IRepository from "../../domain/Repository.interface.ts";
-import User from "../../domain/user/user.model.ts";
+import { IRepository, User } from 'domain';
 import { UserEntity, UserSchema } from "./user.entity.ts";
 
 export default class UserRepository implements IRepository<UserEntity, User>{
