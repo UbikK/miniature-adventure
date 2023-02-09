@@ -1,9 +1,6 @@
-import { AddressDto } from "../src/address/address.model.ts";
-import Address from "../src/address/index.ts";
-import PointOfInterest from "../src/pointOfInterest/index.ts";
-import { PointOfInterestDto } from "../src/pointOfInterest/poi.model.ts";
-import User from "../src/user/index.ts";
-import { UserDto } from "../src/user/user.model.ts";
+import Address, { AddressDto } from "../src/address/address.model.ts";
+import PointOfInterest, { PointOfInterestDto } from "../src/pointOfInterest/poi.model.ts";
+import User, { UserDto } from "../src/user/user.model.ts";
 
 export type { IAddressAdapter } from '../src/address/index.ts';
 export type { IInformationService, IPointOfInterestAdapter } from '../src/pointOfInterest/index.ts';
