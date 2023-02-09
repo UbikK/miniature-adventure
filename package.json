@@ -2,15 +2,15 @@
   "name": "miniature_adventure",
   "packageManager": "yarn@3.3.1",
   "workspaces": [
-    "app",
-    "server"
+    "packages/*"
   ],
   "devDependencies": {
     "typescript": "^4.9.4"
   },
   "scripts": {
     "w": "workspace",
-    "app": "yarn workspace app"
+    "app": "yarn workspace app",
+    "domain": "yarn workspace domain"
   },
   "dependencies": {
     "@react-native-community/cli": "^10.1.0"

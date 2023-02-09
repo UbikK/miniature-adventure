@@ -1,0 +1,15 @@
+{
+  "packageManager": "yarn@3.2.3",
+  "name": "@miniature_adventure/domain",
+  "private": true,
+  "version": "1.0.0",
+  "main": "dist/mod.js",
+  "scripts": {
+    "build": "rimraf dist && tsc"
+  },
+  "postinstall": "yarn build",
+  "watch": "tsc --watch",
+  "dependencies": {
+    "rimraf": "^4.1.2"
+  }
+}
