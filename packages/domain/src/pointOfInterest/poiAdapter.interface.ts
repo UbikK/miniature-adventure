@@ -1,4 +1,4 @@
-import { PointOfInterestDto } from "./poi.model";
+import { PointOfInterestDto } from "./poi.model.ts";
 
 export type IPointOfInterestAdapter = {
     registerPointOfInterestForUser: (data: any) => Promise<PointOfInterestDto>

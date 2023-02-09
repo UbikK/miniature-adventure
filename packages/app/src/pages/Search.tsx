@@ -1,13 +1,13 @@
+import { PointOfInterestDto } from "@miniature_adventure/domain";
 import React, { useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import ListItem from "../components/ListItem";
 import SearchInput from "../components/SearchInput";
 import { getAutocompletePredictions, savePlace } from "../services/ApiService";
-import { PointOfInterest } from "../types/domain";
 
 const Search: React.FC = () => {
-  const [predictions, setPredictions] = useState<PointOfInterest[]>();
+  const [predictions, setPredictions] = useState<PointOfInterestDto[]>();
   const [showPredictions, setShowPredictions] = useState(false);
   const [searchTimeout, setSearchTimeout] = useState<
     ReturnType<typeof setTimeout>
@@ -48,7 +48,7 @@ const Search: React.FC = () => {
   };
 
   const renderItem = (
-    { item, index }: { item: PointOfInterest; index: number },
+    { item, index }: { item: PointOfInterestDto; index: number },
   ) => (
     <ListItem
       item={item}

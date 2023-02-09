@@ -3,7 +3,7 @@
   "name": "@miniature_adventure/domain",
   "private": true,
   "version": "1.0.0",
-  "main": "dist/mod.js",
+  "main": "src/mod.ts",
   "scripts": {
     "build": "rimraf dist && tsc"
   },

@@ -1,5 +1,5 @@
-import Address, { AddressDto } from "../address/address.model";
-import User, { UserDto } from "../user/user.model";
+import Address, { AddressDto } from "../address/address.model.ts";
+import User, { UserDto } from "../user/user.model.ts";
 
 export default class PointOfInterest {
   constructor(
