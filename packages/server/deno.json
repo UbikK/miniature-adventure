@@ -1,14 +1,5 @@
 {
-  "imports": {
-    "std/": "https://deno.land/std@0.174.0/",
-    "oak": "https://deno.land/x/oak@v10.6.0/mod.ts",
-    "postgresjs": "https://deno.land/x/postgresjs@v3.3.3/mod.js",
-    "zod": "https://deno.land/x/zod@v3.16.1/mod.ts",
-    "bcrypt": "https://deno.land/x/bcrypt@v0.4.1/mod.ts",
-    "maps": "https://esm.sh/@googlemaps/google-maps-services-js@3.3.26",
-    "domain": "https://raw.githubusercontent.com/UbikK/miniature-adventure/master/packages/domain/deno/mod.ts"
-  },
   "tasks": {
-    "dev": "deno run --watch --allow-env --unstable --allow-net --allow-read --import-map=deno.json ./app/main.ts"
+    "dev": "deno run --watch --allow-env --unstable --allow-net --allow-read --import-map=import_map.json ./app/main.ts"
   }
 }
