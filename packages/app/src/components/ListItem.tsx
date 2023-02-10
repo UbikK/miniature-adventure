@@ -4,6 +4,7 @@ import {
   GestureResponderEvent,
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -15,6 +16,7 @@ const ListItem: React.FC<any> = (
     onPress: (event: GestureResponderEvent) => void;
   },
 ) => {
+  console.info(item.tags);
   return (
     <Pressable onPress={onPress}>
       <View style={styles.mainCardView}>
@@ -40,7 +42,14 @@ const ListItem: React.FC<any> = (
             : undefined}
           <View style={styles.infoView}>
             <Text style={styles.name}>{item.name}</Text>
-            <Text style={styles.subtitle}>{item.name}</Text>
+            <Text style={styles.subtitle}>{item.address.street}</Text>
+          </View>
+          <View style={styles.pillList}>
+            <ScrollView horizontal>
+              {item.tags?.map((tag: string) => {
+                return <Text>{tag}</Text>;
+              })}
+            </ScrollView>
           </View>
         </View>
       </View>
@@ -86,6 +95,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   subtitle: {
+    color: "#254d4c",
+  },
+  pillList: {
+    height: 30,
+    width: "100%",
+  },
+  pill: {
     color: "#254d4c",
   },
 });

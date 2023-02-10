@@ -15,7 +15,7 @@ export default class PointOfInterestRepository
   async save(data: PointOfInterestEntity) {
     const result = await this.db`
             insert into public.user (
-                place_id, coordinates, address_id, photo_id, name, user_id
+                place_id, coordinates, address_id, photo_id, name, user_id, tags
             ) values (
                 ${data.place_id},
                 ${data.coordinates}, 
@@ -23,6 +23,7 @@ export default class PointOfInterestRepository
                 ${data.photo_id}, 
                 ${data.name}, 
                 ${data.user_id}, 
+                ${data.tags}
             )
             
             returning *
@@ -32,7 +33,7 @@ export default class PointOfInterestRepository
 
   findByAttribute = async (attr: keyof PointOfInterestEntity, value: string) => {
     const result: any[] = await this.db<PointOfInterestEntity[]>`
-        select id, name, place_id, user_id, coordinates, address_id, photo_id from public.point_of_interest where ${this.db(attr)} = ${value};
+        select * from public.point_of_interest where ${this.db(attr)} = ${value};
     `
 
     if(!result.length) return;

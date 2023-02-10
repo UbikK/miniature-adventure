@@ -46,71 +46,6 @@ class Address {
         };
     }
 }
-class PointOfInterest {
-    constructor({ place_id , coordinates , photo_id , name , addressId , address , userId , user  }){
-        this._place_id = place_id;
-        this._coordinates = coordinates;
-        this._photo_id = photo_id;
-        this._name = name;
-        this._addressId = addressId;
-        this._userId = userId;
-        if (address) this._address = address;
-        if (user) this._user = user;
-    }
-    _place_id;
-    _coordinates;
-    _address;
-    _photo_id;
-    _name;
-    _user;
-    _addressId;
-    _userId;
-    setAddress = (addr)=>{
-        this._address = addr;
-    };
-    setUser = (user)=>{
-        this._user = user;
-    };
-    get address() {
-        return this._address;
-    }
-    get user_id() {
-        return this._userId;
-    }
-    get address_id() {
-        return this._addressId;
-    }
-    get photo_id() {
-        return this._photo_id;
-    }
-    set photo_id(id) {
-        this._photo_id = id;
-    }
-    get coordinates() {
-        return this._coordinates;
-    }
-    get place_id() {
-        return this._place_id;
-    }
-    get name() {
-        return this._name;
-    }
-    get user() {
-        return this._user;
-    }
-    get dto() {
-        return {
-            place_id: this.place_id,
-            name: this.name,
-            address: this.address?.dto,
-            user: this.user,
-            photo_id: this.photo_id,
-            addressId: this.address_id,
-            userId: this.user_id,
-            coordinates: this.coordinates
-        };
-    }
-}
 class User {
     constructor({ email , id , lastname , firstname , googleinfos  }){
         this._email = email;
@@ -155,6 +90,79 @@ class User {
             firstName: this._firstName,
             email: this._email,
             googleInfos: this._googleInfos
+        };
+    }
+}
+class PointOfInterest {
+    constructor({ place_id , coordinates , photo_id , name , addressId , address , userId , user , tags  }){
+        this._place_id = place_id;
+        this._coordinates = coordinates;
+        this._photo_id = photo_id;
+        this._name = name;
+        this._addressId = addressId;
+        this._userId = userId;
+        if (address) this._address = new Address(address);
+        if (user) this._user = new User(user);
+    }
+    _place_id;
+    _coordinates;
+    _address;
+    _photo_id;
+    _name;
+    _user;
+    _addressId;
+    _userId;
+    _tags;
+    setAddress = (addr)=>{
+        this._address = addr;
+    };
+    setUser = (user)=>{
+        this._user = user;
+    };
+    get address() {
+        return this._address;
+    }
+    get user_id() {
+        return this._userId;
+    }
+    get address_id() {
+        return this._addressId;
+    }
+    get photo_id() {
+        return this._photo_id;
+    }
+    set photo_id(id) {
+        this._photo_id = id;
+    }
+    get coordinates() {
+        return this._coordinates;
+    }
+    get place_id() {
+        return this._place_id;
+    }
+    get name() {
+        return this._name;
+    }
+    get user() {
+        return this._user;
+    }
+    get tags() {
+        return this._tags ?? [];
+    }
+    set tags(tags) {
+        this._tags = tags;
+    }
+    get dto() {
+        return {
+            place_id: this._place_id,
+            name: this._name,
+            address: this._address?.dto,
+            user: this._user,
+            photo_id: this._photo_id,
+            addressId: this._addressId,
+            userId: this._userId,
+            coordinates: this._coordinates,
+            tags: this._tags
         };
     }
 }

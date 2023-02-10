@@ -25,7 +25,8 @@ export default class PointOfInterestAdapter implements IPointOfInterestAdapter {
       place_id: data.place_id!, 
       address_id: existingAddress.id!, 
       user_id: data.user_id!,
-      photo_id: data.photo_id
+      photo_id: data.photo_id,
+      tags: data.tags
     });
 
     const point = new PointOfInterest(pointEntity);

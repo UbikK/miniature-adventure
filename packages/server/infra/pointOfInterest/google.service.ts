@@ -23,7 +23,7 @@ export default class GoogleService implements IInformationService {
     }
     private getPointOfInterestInformations = async (place: Place): Promise<PointOfInterest | undefined> => {
 
-        const url = `${this.DETAILS_API_URL}?place_id=${place.place_id!}&fields=address_components,geometry/location,name,photo&language=fr&key=${Deno.env.get('GOOGLE_MAPS_API_KEY') ?? env['GOOGLE_MAPS_API_KEY']}`
+        const url = `${this.DETAILS_API_URL}?place_id=${place.place_id!}&fields=address_components,geometry/location,name,photo,types&language=fr&key=${Deno.env.get('GOOGLE_MAPS_API_KEY') ?? env['GOOGLE_MAPS_API_KEY']}`
 
         const response = await fetch(url);
 
@@ -35,7 +35,7 @@ export default class GoogleService implements IInformationService {
         }
 
         const placeData = detailsResponse.result
-        console.info(placeData.place_id)
+
         const addressComponents = placeData.address_components;
 
         const address = new Address({
@@ -46,6 +46,7 @@ export default class GoogleService implements IInformationService {
         });
         const poi = new PointOfInterest({...placeData, place_id: place.place_id, coordinates: `${placeData.geometry?.location.lat}, ${placeData.geometry?.location.lng}`})
         poi.setAddress(address);
+        poi.tags = placeData.types as string[];
 
         if (detailsResponse.result.photos && detailsResponse.result.photos[0]) {
             poi.photo_id = detailsResponse.result.photos[0].photo_reference;

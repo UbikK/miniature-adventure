@@ -8,6 +8,7 @@ export const PointOfInterestSchema = z.object({
     photo_id: z.string(),
     name: z.string(),
     user_id: z.string(),
+    tags: z.array(z.string()).optional()
 })
 
 export type PointOfInterestEntity = z.infer<typeof PointOfInterestSchema>
