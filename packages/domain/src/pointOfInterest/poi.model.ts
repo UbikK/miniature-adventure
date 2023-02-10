@@ -3,7 +3,7 @@ import User, { UserDto } from "../user/user.model.ts";
 
 export default class PointOfInterest {
   constructor(
-    { place_id, coordinates, photo_id, name, addressId, address, userId, user }: {
+    { place_id, coordinates, photo_id, name, addressId, address, userId, user, tags }: {
       place_id?: string;
       coordinates?: string;
       photo_id?: string;
@@ -12,6 +12,7 @@ export default class PointOfInterest {
       address?: Address; 
       userId?: string;
       user?: User;
+      tags?: string[]
     },
   ) {
     this._place_id = place_id;
@@ -34,6 +35,7 @@ export default class PointOfInterest {
   private _user!: User;
   private _addressId?: string | undefined;
   private _userId?: string | undefined;
+  private _tags?: string[]
 
   setAddress = (addr: Address) => {
     this._address = addr;
@@ -73,16 +75,25 @@ export default class PointOfInterest {
     return this._user;
   }
 
+  public get tags() : string[]{
+    return this._tags ?? [];
+  }
+
+  public set tags(tags: string[]) {
+    this._tags = tags;
+  }
+
   public get dto(): PointOfInterestDto {
     return {
-      place_id: this.place_id,
-      name: this.name,
-      address: this.address?.dto,
-      user: this.user,
-      photo_id: this.photo_id,
-      addressId: this.address_id,
-      userId: this.user_id,
-      coordinates: this.coordinates
+      place_id: this._place_id,
+      name: this._name,
+      address: this._address?.dto,
+      user: this._user,
+      photo_id: this._photo_id,
+      addressId: this._addressId,
+      userId: this._userId,
+      coordinates: this._coordinates,
+      tags: this._tags
     }
   }
 }
@@ -95,5 +106,6 @@ export type PointOfInterestDto = {
   photo_id?: string,
   addressId?: string,
   userId?: string,
-  coordinates?:string
+  coordinates?:string,
+  tags?: string[]
 }
