@@ -10,7 +10,7 @@ import PointOfInterestRepository from "./poi.repository.ts";
 export default class PointOfInterestAdapter implements IPointOfInterestAdapter {
   constructor (private repo: PointOfInterestRepository, private addressRepo: AddressRepository, private userRepo: UserRepository, private infoService: GoogleService) {  }
 
-  registerPointOfInterestForUser: (data: PointOfInterestDto) => Promise<boolean> = async (data) => {
+  registerPointOfInterestForUser = async (data:PointOfInterestDto) => {
     const addressInfos = data.address!;
     let existingAddress: AddressEntity | undefined = await this.addressRepo.findOne(addressInfos);
 
