@@ -101,6 +101,7 @@ class PointOfInterest {
         this._name = name;
         this._addressId = addressId;
         this._userId = userId;
+        this._tags = tags;
         if (address) this._address = new Address(address);
         if (user) this._user = new User(user);
     }

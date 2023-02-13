@@ -6,6 +6,9 @@ const sql = postgres({
     database: 'postgres',
     username: 'admin',
     password:'admin',
+    transform: {
+        undefined: null,
+    }
 })
 
 export default sql;

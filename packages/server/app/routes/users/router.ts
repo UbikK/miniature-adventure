@@ -15,9 +15,7 @@ router.post('/', async (ctx) => {
 });
 
 router.get('/:email', async (ctx) => {
-    console.info('hey')
     const email = ctx.params.email;
-    console.info(email)
     const user = await new GetUserInfosUseCase(adapter).execute(email);
     ctx.response.body = user?.dto
 })

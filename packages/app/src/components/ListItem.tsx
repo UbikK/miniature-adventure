@@ -1,41 +1,44 @@
 import { GOOGLE_MAPS_API_KEY } from "@env";
 import { PointOfInterestDto } from "@miniature_adventure/domain";
 import {
+  FlatList,
   GestureResponderEvent,
   Image,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ListItem: React.FC<any> = (
-  { item, onPress }: {
+  { item, onPress, index }: {
     item: PointOfInterestDto;
-    onPress: (event: GestureResponderEvent) => void;
+    onPress: (event: GestureResponderEvent, index: number) => void;
+    index: number;
   },
 ) => {
-  console.info(item.tags);
+  const Pill = (tag: string) => {
+    return (
+      <View style={styles.pill}>
+        <Text style={styles.pillContent}>{tag}</Text>
+      </View>
+    );
+  };
   return (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={(e) => onPress(e, index)}>
       <View style={styles.mainCardView}>
         <View style={styles.innerCardView}>
           {item.photo_id
             ? (
-              <View style={styles.pic}>
+              <View style={styles.picView}>
                 <Image
                   source={{
                     uri:
                       `https://maps.googleapis.com/maps/api/place/photo?maxheight=1000&maxwidth=1000&photo_reference=${item.photo_id}&key=${GOOGLE_MAPS_API_KEY}`,
                   }}
                   resizeMode="cover"
-                  style={{
-                    borderTopLeftRadius: 15,
-                    borderTopRightRadius: 15,
-                    height: 100,
-                    width: "100%",
-                  }}
+                  style={styles.pic}
                 />
               </View>
             )
@@ -44,13 +47,15 @@ const ListItem: React.FC<any> = (
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.subtitle}>{item.address.street}</Text>
           </View>
-          <View style={styles.pillList}>
-            <ScrollView horizontal>
-              {item.tags?.map((tag: string) => {
-                return <Text>{tag}</Text>;
-              })}
-            </ScrollView>
-          </View>
+
+          <SafeAreaView style={styles.pillListView}>
+            <FlatList
+              style={styles.pillList}
+              horizontal
+              data={item.tags}
+              renderItem={({ item }) => Pill(item)}
+            />
+          </SafeAreaView>
         </View>
       </View>
     </Pressable>
@@ -81,14 +86,24 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     width: "100%",
   },
-  pic: {
+  picView: {
     width: "100%",
     height: "50%",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  pic: {
+    height: 100,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    width: "100%",
+    backgroundColor: "#fff7d6",
   },
   infoView: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 5,
   },
   name: {
     color: "#254d4c",
@@ -97,12 +112,28 @@ const styles = StyleSheet.create({
   subtitle: {
     color: "#254d4c",
   },
+  pillListView: {
+    height: 40,
+    width: "95%",
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 5,
+  },
   pillList: {
-    height: 30,
-    width: "100%",
+    overflow: "hidden",
   },
   pill: {
-    color: "#254d4c",
+    backgroundColor: "#254d4c",
+    borderRadius: 25,
+    padding: 10,
+    marginLeft: 5,
+    marginRight: 5,
+    minWidth: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  pillContent: {
+    color: "#f1f1e6",
   },
 });
 

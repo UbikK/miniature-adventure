@@ -18,6 +18,7 @@ const adapter = new PointOfInterestAdapter(
 const router = new Router();
 router.post('/', async (ctx) => {
     const body = await ctx.request.body({type: 'json'}).value;
+    console.info(body)
     const place = new AddPointOfInterestUseCase(adapter).execute(body);
     ctx.response.body = place
 });

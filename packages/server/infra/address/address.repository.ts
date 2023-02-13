@@ -14,14 +14,8 @@ export default class AddressRepository implements IRepository<AddressEntity, Add
     
     save: (data: AddressEntity) => Promise<AddressEntity> = async (data) => {
         const result = await this.db<AddressEntity[]>`
-            insert into public.address (
-                street, zipcode, city, country
-            ) values (
-                ${data.street},
-                ${data.zipcode}, 
-                ${data.city}, 
-                ${data.country}, 
-            )
+            insert into public.address (street, zipcode, city, country) 
+            values (${data.street},${data.zipcode},${data.city},${data.country})
             
             returning *
         `

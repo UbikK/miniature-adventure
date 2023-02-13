@@ -8,7 +8,7 @@ export default class UserRepository implements IRepository<UserEntity, User>{
         const result = await this.db<UserEntity[]>`
             select * from public.user where id = ${id}
         `
-        return UserSchema.parse(result)
+        return UserSchema.parse({...result[0], googleinfos: JSON.parse(result[0].googleinfos)})
     }
 
 

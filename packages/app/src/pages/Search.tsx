@@ -1,9 +1,11 @@
+import { useHookstate } from "@hookstate/core";
 import { PointOfInterestDto } from "@miniature_adventure/domain";
 import React, { useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import ListItem from "../components/ListItem";
 import SearchInput from "../components/SearchInput";
+import { globalstate } from "../helpers/state";
 import { getAutocompletePredictions, savePlace } from "../services/ApiService";
 
 const Search: React.FC = () => {
@@ -12,11 +14,17 @@ const Search: React.FC = () => {
   const [searchTimeout, setSearchTimeout] = useState<
     ReturnType<typeof setTimeout>
   >();
+  const state = useHookstate(globalstate);
 
   const handleSelection = (e: any, index: number) => {
+    console.info(e);
+
     if (predictions) {
+      console.info(index);
       const selected = predictions[index];
-      savePlace(selected);
+
+      console.info("selected", selected);
+      savePlace({ ...selected, userId: state.userInfos.get()?._id });
       resetState();
     }
   };
@@ -84,13 +92,16 @@ export default Search;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff7d6",
+    //backgroundColor: "255	247	214 0",
     height: "100%",
+    backgroundColor: "rgba(255, 247, 214, 1)",
   },
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
     paddingTop: "2%",
+    marginBottom: "2%",
+    backgroundColor: "rgba(255, 247, 214, 0)",
   },
   predictionView: {
     margin: "2%",

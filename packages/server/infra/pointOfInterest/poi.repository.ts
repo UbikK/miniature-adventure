@@ -9,26 +9,55 @@ export default class PointOfInterestRepository
     const result = await this.db`
         select * from public.pointofinterest where id = ${id}
       `
-      return PointOfInterestSchema.parse(result)
+      return PointOfInterestSchema.parse({...result[0], tags: result[0].tags.split(',')})
   };
 
   async save(data: PointOfInterestEntity) {
-    const result = await this.db`
-            insert into public.user (
-                place_id, coordinates, address_id, photo_id, name, user_id, tags
+
+    let poi: PointOfInterestEntity;
+    const existingPoi = await this.findByAttribute('place_id', data.place_id);
+
+    if(existingPoi) {
+      poi = existingPoi[0];
+    } else {
+      const result = await this.db`
+      insert into public.point_of_interest (
+          place_id, coordinates, address_id, photo_id, name, user_id, tags
+      ) values (
+          ${data.place_id},
+          ${data.coordinates}, 
+          ${data.address_id}, 
+          ${data.photo_id}, 
+          ${data.name}, 
+          ${data.tags}
+      )
+      
+      returning *
+  `;
+
+      poi = PointOfInterestSchema.parse({...result[0], tags: result[0].tags.split(',')});
+    }
+    
+    
+    const existingJoint = await this.db`select * from public.point_of_interest where user_id = ${data.user_id} and poi_id = ${poi.id}`;
+
+    if (existingJoint && existingJoint.length) {
+      return true;
+    }
+    
+    const joint = await this.db`
+            insert into public.user_poi (
+                user_id, poi_id
             ) values (
-                ${data.place_id},
-                ${data.coordinates}, 
-                ${data.address_id}, 
-                ${data.photo_id}, 
-                ${data.name}, 
-                ${data.user_id}, 
-                ${data.tags}
+                ${data.user_id},
+                ${poi.id}
             )
             
             returning *
         `;
-    return result;
+    if(joint && joint.length) return true;
+
+    return false;
   }
 
   findByAttribute = async (attr: keyof PointOfInterestEntity, value: string) => {
@@ -38,7 +67,16 @@ export default class PointOfInterestRepository
 
     if(!result.length) return;
 
-    return result.map(i => PointOfInterestSchema.parse(i))
+    return result.map(i => PointOfInterestSchema.parse({...i, tags:i.tags.split(',')}))
+  }
+
+  findForUser = async (userId: string) => {
+    const listIds = await this.db`select * from public.user_point_of_interest where user_id = ${userId}`;
+    const list = await this.db`select * from public.user_point_of_interest where poi_id in ${this.db(listIds.map((i: any) => i.id))}`
+    if(list && list.length) {
+      return list.map((i:any) => PointOfInterestSchema.parse({...i, tags: i.tags.split(',')}));
+    }
+    return []
   }
 
 }
