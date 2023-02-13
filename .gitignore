@@ -18,3 +18,4 @@ app/ios
 app/android/.gradle
 packages/domain/dist/**/*.js
 packages/domain/dist/**/*.map
+commands.md
