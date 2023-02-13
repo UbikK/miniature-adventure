@@ -1,7 +1,7 @@
 import { hookstate } from "@hookstate/core";
+import { PointOfInterest, User } from "@miniature_adventure/domain";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { getUser } from "../services/ApiService";
-import { PointOfInterest, User } from "../types/domain";
 
 type State = {
     userInfos?: User,

@@ -6,6 +6,7 @@
     "zod": "https://deno.land/x/zod@v3.16.1/mod.ts",
     "bcrypt": "https://deno.land/x/bcrypt@v0.4.1/mod.ts",
     "maps": "https://esm.sh/@googlemaps/google-maps-services-js@3.3.26",
-    "domain": "https://raw.githubusercontent.com/UbikK/miniature-adventure/master/packages/domain/src/mod.ts"
+    "@domain": "../domain/src/mod.ts",
+    "@infra/": "../infra/src/"
   }
 }

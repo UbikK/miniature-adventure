@@ -1,8 +1,7 @@
 import { API_URL } from "@env";
-import { PointOfInterestDto } from "@miniature_adventure/domain";
+import { PointOfInterestDto, User } from "@miniature_adventure/domain";
 import { User as GoogleUser } from '@react-native-google-signin/google-signin';
 import { getCurrentPositionAsync } from "../polyfills/Geolocation";
-import { PointOfInterest, User } from "../types/domain";
 
 export const getAllPlacesForUser = async (userId: string) => {
   console.info('userId', userId)
@@ -85,5 +84,5 @@ export const getAutocompletePredictions: (
 
   console.info(body)
   
-  return body.map((i:any) => new PointOfInterest(i).dto);
+  return body;
 };

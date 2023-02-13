@@ -1,4 +1,4 @@
-import { IUseCase, IUserAdapter, User } from "domain";
+import { IUseCase, IUserAdapter, User } from "@domain";
 export default class GetUserInfosUseCase implements IUseCase {
     /**
      *

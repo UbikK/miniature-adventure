@@ -1,30 +1,9 @@
-import Address, { AddressDto } from "../address/address.model.ts";
-import User, { UserDto } from "../user/user.model.ts";
+import Address from "../address/address.model.ts";
+import User from "../user/user.model.ts";
 
 export default class PointOfInterest {
-  constructor(
-    { place_id, coordinates, photo_id, name, addressId, address, userId, user, tags }: {
-      place_id?: string;
-      coordinates?: string;
-      photo_id?: string;
-      name?: string;
-      addressId?: string; 
-      address?: Address; 
-      userId?: string;
-      user?: User;
-      tags?: string[]
-    },
-  ) {
-    this._place_id = place_id;
-    this._coordinates = coordinates;
-    this._photo_id = photo_id;
-    this._name = name;    
-    this._addressId = addressId;
-    this._userId = userId;
-    this._tags = tags
-
-    if(address) this._address = new Address(address);
-    if(user) this._user = new User(user);
+  constructor(initData: Partial<PointOfInterest>) {
+    Object.assign(initData, this)
   }
 
   //private _id?: string;
@@ -83,30 +62,5 @@ export default class PointOfInterest {
   public set tags(tags: string[]) {
     this._tags = tags;
   }
-
-  public get dto(): PointOfInterestDto {
-    return {
-      place_id: this._place_id,
-      name: this._name,
-      address: this._address?.dto,
-      user: this._user,
-      photo_id: this._photo_id,
-      addressId: this._addressId,
-      userId: this._userId,
-      coordinates: this._coordinates,
-      tags: this._tags
-    }
-  }
 }
 
-export type PointOfInterestDto = {
-  place_id?: string,
-  name?: string,
-  address?: AddressDto,
-  user?: UserDto,
-  photo_id?: string,
-  addressId?: string,
-  userId?: string,
-  coordinates?:string,
-  tags?: string[]
-}

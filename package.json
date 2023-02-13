@@ -5,12 +5,12 @@
     "packages/*"
   ],
   "devDependencies": {
-    "typescript": "^4.9.4"
+    "typescript": "beta"
   },
   "scripts": {
     "w": "workspace",
     "app": "yarn workspace app",
-    "domain": "yarn workspace domain"
+    "domain": "yarn workspace @miniature_adventure/domain"
   },
   "dependencies": {
     "@react-native-community/cli": "^10.1.0"

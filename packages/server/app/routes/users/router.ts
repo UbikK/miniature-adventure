@@ -1,7 +1,7 @@
-import { Router } from "oak";
-import sql from "../../../infra/database/connection.ts";
-import UserAdapter from "../../../infra/user/user.adapter.ts";
-import UserRepository from "../../../infra/user/user.repository.ts";
+import sql from "@infra/database/connection.ts";
+import UserAdapter from "@infra/user/user.adapter.ts";
+import UserRepository from "@infra/user/user.repository.ts";
+import { HttpError, Router } from "oak";
 import GetUserInfosUseCase from "../../usecases/user/getUserInfos.usecase.ts";
 import SignUpUseCase from "../../usecases/user/signup.usecase.ts";
 
@@ -17,7 +17,13 @@ router.post('/', async (ctx) => {
 router.get('/:email', async (ctx) => {
     const email = ctx.params.email;
     const user = await new GetUserInfosUseCase(adapter).execute(email);
-    ctx.response.body = user?.dto
+    if(!user) {
+        ctx.response.status = 404;
+        ctx.response.body = new HttpError('User not found');
+        return;
+    }
+    ctx.response.status = 200;
+    ctx.response.body = adapter.toDto(user);
 })
 
 export default router;

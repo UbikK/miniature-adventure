@@ -1,7 +1,8 @@
-import { PointOfInterestDto } from "./poi.model.ts";
+import { IAdapter } from "../adapter.interface.ts";
+import PointOfInterest from "./poi.model.ts";
 
-export type IPointOfInterestAdapter = {
-    registerPointOfInterestForUser: (data: PointOfInterestDto) => Promise<boolean>
-    getPointsOfInterestForUser: (userId: string) => Promise<PointOfInterestDto[]>
-    getPredictions: (input: string, coords: string) => Promise<PointOfInterestDto[]>
+export interface IPointOfInterestAdapter extends IAdapter<PointOfInterest> {
+    registerPointOfInterestForUser: (data: PointOfInterest) => Promise<boolean>
+    getPointsOfInterestForUser: (userId: string) => Promise<PointOfInterest[]>
+    getPredictions: (input: string, coords: string) => Promise<PointOfInterest[]>
 }

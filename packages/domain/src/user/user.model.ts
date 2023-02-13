@@ -45,21 +45,4 @@ export default class User {
         this._firstName = value;
     }
 
-    public get dto(): UserDto {
-        return {
-            id: this._id,
-            lastName: this._lastName,
-            firstName: this._firstName,
-            email: this._email,
-            googleInfos: this._googleInfos
-        } 
-    }
-}
-
-export type UserDto = {
-    id?: string,
-    lastName?: string;
-    firstName?: string;
-    email?: string,
-    googleInfos?: any
 }

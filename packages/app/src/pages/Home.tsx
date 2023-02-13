@@ -1,4 +1,5 @@
 import { useHookstate } from "@hookstate/core";
+import { PointOfInterest } from "@miniature_adventure/domain";
 import type { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { ParamListBase } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
@@ -8,7 +9,6 @@ import ListItem from "../components/ListItem";
 import SearchInput from "../components/SearchInput";
 import { globalstate } from "../helpers/state";
 import { getAllPlacesForUser } from "../services/ApiService";
-import { PointOfInterest } from "../types/domain";
 
 const Home: React.FC<{ navigation: BottomTabNavigationProp<ParamListBase> }> = (
   { navigation },
@@ -21,8 +21,8 @@ const Home: React.FC<{ navigation: BottomTabNavigationProp<ParamListBase> }> = (
   const state = useHookstate(globalstate);
 
   const getAllPlaces = async () => {
-    if (state.userInfos?.get()) {
-      const dbPlaces = await getAllPlacesForUser(state.userInfos?.get()?.id);
+    if (state.userInfos?.get()?.id) {
+      const dbPlaces = await getAllPlacesForUser(state.userInfos?.get()?.id!);
       setPlaces(dbPlaces);
     }
   };
@@ -41,7 +41,7 @@ const Home: React.FC<{ navigation: BottomTabNavigationProp<ParamListBase> }> = (
 
   const handleChange = (text: string) => {
     if (places) {
-      setFilteredPlaces(places.filter((p) => p.name.includes(text)));
+      setFilteredPlaces(places.filter((p) => p.name?.includes(text)));
     }
   };
 

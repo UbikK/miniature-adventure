@@ -1,16 +1,18 @@
 export default class Address {
-  /** */
-  constructor({ street, zipcode, city, country }: {street: string, zipcode: string, city: string, country: string}) {
-    this._street = street;
-    this._zipcode = zipcode;
-    this._city = city;
-    this._country = country;
-  }
-  private _street: string;
-  private _city: string;
-  private _country: string;
-  private _zipcode: string;
 
+  constructor(initData: Partial<Address>) {
+      Object.assign(initData, this);
+  }
+  
+  private _id!: string
+  private _street!: string;
+  private _city!: string;
+  private _country!: string;
+  private _zipcode!: string;
+
+  public get id(): string {
+    return this._id;
+  }
   public get street(): string {
     return this._street;
   }
@@ -36,20 +38,6 @@ export default class Address {
   public set city(value: string) {
     this._city = value;
   }
-
-  public get dto() {
-    return {
-      street: this.street,
-      zipcode: this.zipcode,
-      city: this.city,
-      country: this.country
-    }
-  }
 }
 
-export type AddressDto = {
-  street: string,
-  zipcode: string,
-  city: string,
-  country: string
-}
+

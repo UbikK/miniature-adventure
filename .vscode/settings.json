@@ -7,8 +7,8 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "deno.enablePaths": [
     "./packages/server",
-    "./packages/domain/deno",
-    "./packages/domain/src"
+    "./packages/domain/src",
+    "./packages/infra/src"
   ],
   "nuxt.isNuxtApp": false,
   "react-native-tools.projectRoot": "./app",
