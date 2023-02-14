@@ -1,10 +1,10 @@
 export default class User {
-    constructor({email, id, lastname, firstname, googleinfos}: {email?: string, lastname?: string, firstname?: string, id?: string, googleinfos?: any |undefined}){
-        this._email = email;
-        this._id = id;
-        this._firstName = firstname;
-        this._lastName = lastname;
-        this._googleInfos = googleinfos
+    constructor(initData: any){
+        this._email = initData.email;
+        this._id = initData.id;
+        this._firstName = initData.firstName;
+        this._lastName = initData.lastName;
+        this._googleInfos = initData.googleInfos
     }
 
     private _id?: string

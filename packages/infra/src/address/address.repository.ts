@@ -5,10 +5,12 @@ import { AddressEntity, AddressSchema } from "./address.entity.ts";
 export default class AddressRepository implements IRepository<AddressEntity, Address> {
 
     constructor(private db: postgres.Sql) {}
-    findById: (id: string) => Promise<AddressEntity> = async (id) => {
+    findById: (id: string) => Promise<any> = async (id) => {
+        console.info('Address Id', id)
         const result = await this.db<AddressEntity[]>`
             select * from public.address where id = ${id}
         `
+        console.info(result[0])
         return AddressSchema.parse(result[0]);
     };
     

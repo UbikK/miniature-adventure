@@ -3,64 +3,73 @@ import User from "../user/user.model.ts";
 
 export default class PointOfInterest {
   constructor(initData: Partial<PointOfInterest>) {
-    Object.assign(initData, this)
+    Object.assign(this, initData)
   }
 
-  //private _id?: string;
-  private _place_id?: string | undefined;
-  private _coordinates?: string | undefined;
-  private _address!: Address;
-  private _photo_id?: string | undefined;
-  private _name?: string | undefined;
-  private _user!: User;
-  private _addressId?: string | undefined;
-  private _userId?: string | undefined;
-  private _tags?: string[]
+  private placeId?: string | undefined;
+  private coordinates?: string | undefined;
+  private address!: Address;
+  private photoId?: string | undefined;
+  private name?: string | undefined;
+  private user!: User;
+  private addressId?: string | undefined;
+  private userId?: string | undefined;
+  private tags?: (string|undefined)[] | undefined
 
-  setAddress = (addr: Address) => {
-    this._address = addr;
-  };
-
-  setUser = (user: User) => {
-    this._user = user;
+  public get Address(): Address {
+    return this.address;
   }
 
-  public get address(): Address | undefined {
-    return this._address;
+  public get UserId(): string | undefined {
+    return this.userId;
   }
-
-  public get user_id(): string | undefined {
-    return this._userId;
+  public get AddressId(): string | undefined {
+    return this.addressId;
   }
-  public get address_id(): string | undefined {
-    return this._addressId;
+  public get PhotoId(): string {
+    return this.photoId!;
   }
-  public get photo_id(): string {
-    return this._photo_id!;
+  public set PhotoId(id: string) {
+    this.photoId = id;
   }
-  public set photo_id(id: string) {
-    this._photo_id = id;
+  public get Coordinates(): string | undefined {
+    return this.coordinates;
   }
-  public get coordinates(): string | undefined {
-    return this._coordinates;
-  }
-  public get place_id(): string | undefined {
-    return this._place_id;
+  public get PlaceId(): string | undefined {
+    return this.placeId;
   } 
-  public get name(): string | undefined {
-    return this._name;
+  public get Name(): string | undefined {
+    return this.name;
   }
 
-  public get user() {
-    return this._user;
+  public get User() {
+    return this.user;
   }
 
-  public get tags() : string[]{
-    return this._tags ?? [];
+  public get Tags() : (string|undefined)[]{
+    return this.tags ?? [];
   }
 
-  public set tags(tags: string[]) {
-    this._tags = tags;
+  public set Tags(tags: (string|undefined)[]) {
+    this.tags = tags;
+  }
+
+  public set PlaceId(value: string | undefined) {
+    this.placeId = value;
+  }
+  public set Coordinates(value: string | undefined) {
+    this.coordinates = value;
+  }
+
+  public set Name(value: string | undefined) {
+    this.name = value;
+  }
+  public set User(value: User) {
+    this.user = value;
+  }
+ 
+  public set Address(value: Address) {
+    this.address = value;
   }
 }
 

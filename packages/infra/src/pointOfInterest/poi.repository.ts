@@ -15,7 +15,7 @@ export default class PointOfInterestRepository
   async save(data: PointOfInterestEntity) {
 
     let poi: PointOfInterestEntity;
-    const existingPoi = await this.findByAttribute('place_id', data.place_id);
+    const existingPoi = await this.findByAttribute('placeId', data.placeId);
 
     if(existingPoi) {
       poi = existingPoi[0];
@@ -24,10 +24,10 @@ export default class PointOfInterestRepository
       insert into public.point_of_interest (
           place_id, coordinates, address_id, photo_id, name, tags
       ) values (
-          ${data.place_id},
+          ${data.placeId},
           ${data.coordinates}, 
-          ${data.address_id}, 
-          ${data.photo_id}, 
+          ${data.addressId}, 
+          ${data.photoId}, 
           ${data.name}, 
           ${data.tags}
       )
@@ -75,11 +75,9 @@ export default class PointOfInterestRepository
   }
 
   findForUser = async (userId: string) => {
-    // const listIds = await this.db`select poi_id from public.user_poi where user_id = ${userId}`;
     const list = await this.db`select * from public.point_of_interest where id in (${this.db`select poi_id from public.user_poi where user_id = ${userId}`})`;
-    console.info(list)
     if(list && list.length) {
-      return list.map((i:any) => PointOfInterestSchema.parse({...i, tags: i.tags.split(',')}));
+      return list.map((i:any) => PointOfInterestSchema.parse(i));
     }
     return []
   }

@@ -1,14 +1,13 @@
-import { AddressDto } from "../address/address.dto.ts"
-import { UserDto } from "../user/user.dto.ts"
+import { Address, User } from "../../../domain/src/mod.ts"
 
 export type PointOfInterestDto = {
-    place_id?: string,
+    placeId?: string,
     name?: string,
-    address?: AddressDto,
-    user?: UserDto,
-    photo_id?: string,
+    address?: Address,
+    user?: User,
+    photoId?: string,
     addressId?: string,
     userId?: string,
     coordinates?:string,
-    tags?: string[]
+    tags?: (string|undefined)[]
   }

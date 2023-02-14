@@ -3,7 +3,7 @@
   "name": "@miniature_adventure/domain",
   "private": true,
   "version": "1.0.0",
-  "main": "dist/mod.d.ts",
+  "main": "src/mod.ts",
   "scripts": {
     "build": "tsc"
   },

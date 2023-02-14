@@ -2,10 +2,11 @@
   "name": "miniature_adventure",
   "packageManager": "yarn@3.3.1",
   "workspaces": [
-    "packages/app",
+    "packages/application/app",
     "packages/domain"
   ],
   "devDependencies": {
+    "react-native-monorepo-tools": "^1.2.1",
     "typescript": "beta"
   },
   "scripts": {

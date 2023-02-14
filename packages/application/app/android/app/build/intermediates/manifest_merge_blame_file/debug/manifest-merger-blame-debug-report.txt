@@ -1,0 +1,141 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.miniatureadventure"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="31" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/debug/AndroidManifest.xml:5:5-77
+11-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/debug/AndroidManifest.xml:5:22-75
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:4:5-67
+12-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:4:22-64
+13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+13-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:5:5-79
+13-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:5:22-76
+14    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+14-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:6:5-81
+14-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:6:22-78
+15    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+15-->[com.facebook.flipper:flipper:0.125.0] /Users/alberic/.gradle/caches/transforms-3/21e5cf8aabb42ea07d8a4a5d008cb25f/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:5-76
+15-->[com.facebook.flipper:flipper:0.125.0] /Users/alberic/.gradle/caches/transforms-3/21e5cf8aabb42ea07d8a4a5d008cb25f/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:22-73
+16
+17    <application
+17-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:7:5-26:19
+18        android:name="com.miniatureadventure.MainApplication"
+18-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:8:7-38
+19        android:allowBackup="false"
+19-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:12:7-34
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.7.0] /Users/alberic/.gradle/caches/transforms-3/635d174afd68d3bad8870f503247aced/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+21        android:debuggable="true"
+22        android:icon="@mipmap/ic_launcher"
+22-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:10:7-41
+23        android:label="@string/app_name"
+23-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:9:7-39
+24        android:roundIcon="@mipmap/ic_launcher_round"
+24-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:11:7-52
+25        android:theme="@style/AppTheme"
+25-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:13:7-38
+26        android:usesCleartextTraffic="true" >
+26-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/debug/AndroidManifest.xml:8:9-44
+27        <activity
+27-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/debug/AndroidManifest.xml:11:9-111
+28            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+28-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/debug/AndroidManifest.xml:11:19-83
+29            android:exported="false" />
+29-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/debug/AndroidManifest.xml:11:84-108
+30        <activity
+30-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:14:7-25:18
+31            android:name="com.miniatureadventure.MainActivity"
+31-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:15:9-37
+32            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+32-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:17:9-118
+33            android:exported="true"
+33-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:20:9-32
+34            android:label="@string/app_name"
+34-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:16:9-41
+35            android:launchMode="singleTask"
+35-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:18:9-40
+36            android:windowSoftInputMode="adjustResize" >
+36-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:19:9-51
+37            <intent-filter>
+37-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:21:9-24:25
+38                <action android:name="android.intent.action.MAIN" />
+38-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:22:13-65
+38-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:22:21-62
+39
+40                <category android:name="android.intent.category.LAUNCHER" />
+40-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:23:13-73
+40-->/Users/alberic/projets/perso/miniature-adventure/packages/application/app/android/app/src/main/AndroidManifest.xml:23:23-70
+41            </intent-filter>
+42        </activity>
+43        <activity
+43-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:23:9-27:75
+44            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+44-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:24:13-93
+45            android:excludeFromRecents="true"
+45-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:25:13-46
+46            android:exported="false"
+46-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:26:13-37
+47            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+47-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:27:13-72
+48        <!--
+49            Service handling Google Sign-In user revocation. For apps that do not integrate with
+50            Google Sign-In, this service will never be started.
+51        -->
+52        <service
+52-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:33:9-37:51
+53            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+53-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:34:13-89
+54            android:exported="true"
+54-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:35:13-36
+55            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+55-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:36:13-107
+56            android:visibleToInstantApps="true" />
+56-->[com.google.android.gms:play-services-auth:19.2.0] /Users/alberic/.gradle/caches/transforms-3/6d57775e6b65edf8c5a4fb5534e054e5/transformed/jetified-play-services-auth-19.2.0/AndroidManifest.xml:37:13-48
+57
+58        <activity
+58-->[com.google.android.gms:play-services-base:17.5.0] /Users/alberic/.gradle/caches/transforms-3/647a5acdf1d4ecb816a010b5d72330a1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:23:9-26:75
+59            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+59-->[com.google.android.gms:play-services-base:17.5.0] /Users/alberic/.gradle/caches/transforms-3/647a5acdf1d4ecb816a010b5d72330a1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:24:13-79
+60            android:exported="false"
+60-->[com.google.android.gms:play-services-base:17.5.0] /Users/alberic/.gradle/caches/transforms-3/647a5acdf1d4ecb816a010b5d72330a1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:25:13-37
+61            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+61-->[com.google.android.gms:play-services-base:17.5.0] /Users/alberic/.gradle/caches/transforms-3/647a5acdf1d4ecb816a010b5d72330a1/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:26:13-72
+62
+63        <meta-data
+63-->[com.google.android.gms:play-services-basement:17.5.0] /Users/alberic/.gradle/caches/transforms-3/94d1034552d8d33f3db52e3212ef0ddd/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:23:9-25:69
+64            android:name="com.google.android.gms.version"
+64-->[com.google.android.gms:play-services-basement:17.5.0] /Users/alberic/.gradle/caches/transforms-3/94d1034552d8d33f3db52e3212ef0ddd/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:24:13-58
+65            android:value="@integer/google_play_services_version" />
+65-->[com.google.android.gms:play-services-basement:17.5.0] /Users/alberic/.gradle/caches/transforms-3/94d1034552d8d33f3db52e3212ef0ddd/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:25:13-66
+66
+67        <provider
+67-->[androidx.emoji2:emoji2:1.0.0] /Users/alberic/.gradle/caches/transforms-3/c7cfc38949dfa1c56d968144057a1e56/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+68            android:name="androidx.startup.InitializationProvider"
+68-->[androidx.emoji2:emoji2:1.0.0] /Users/alberic/.gradle/caches/transforms-3/c7cfc38949dfa1c56d968144057a1e56/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+69            android:authorities="com.miniatureadventure.androidx-startup"
+69-->[androidx.emoji2:emoji2:1.0.0] /Users/alberic/.gradle/caches/transforms-3/c7cfc38949dfa1c56d968144057a1e56/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+70            android:exported="false" >
+70-->[androidx.emoji2:emoji2:1.0.0] /Users/alberic/.gradle/caches/transforms-3/c7cfc38949dfa1c56d968144057a1e56/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+71            <meta-data
+71-->[androidx.emoji2:emoji2:1.0.0] /Users/alberic/.gradle/caches/transforms-3/c7cfc38949dfa1c56d968144057a1e56/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+72                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+72-->[androidx.emoji2:emoji2:1.0.0] /Users/alberic/.gradle/caches/transforms-3/c7cfc38949dfa1c56d968144057a1e56/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+73                android:value="androidx.startup" />
+73-->[androidx.emoji2:emoji2:1.0.0] /Users/alberic/.gradle/caches/transforms-3/c7cfc38949dfa1c56d968144057a1e56/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+74            <meta-data
+74-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/alberic/.gradle/caches/transforms-3/f86cd17227add86903b677d6db025a9d/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+75                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+75-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/alberic/.gradle/caches/transforms-3/f86cd17227add86903b677d6db025a9d/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+76                android:value="androidx.startup" />
+76-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/alberic/.gradle/caches/transforms-3/f86cd17227add86903b677d6db025a9d/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+77        </provider>
+78    </application>
+79
+80</manifest>

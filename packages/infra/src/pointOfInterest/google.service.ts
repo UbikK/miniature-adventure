@@ -20,6 +20,7 @@ export default class GoogleService implements IInformationService {
         }
 
         const results = await Promise.all(body.predictions.map(this.getPointOfInterestInformations));
+        console.info(results)
         return results.filter(p => !!p) as PointOfInterest[];
     }
     private getPointOfInterestInformations = async (place: Place): Promise<PointOfInterest | undefined> => {
@@ -40,17 +41,23 @@ export default class GoogleService implements IInformationService {
         const addressComponents = placeData.address_components;
 
         const address = new Address({
-            street: `${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.street_number))?.long_name} ${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.route))?.long_name}`,
+            street: `${
+                addressComponents!.find(
+                    (a: AddressComponent) => a.types.includes(AddressType.street_number)
+                )?.long_name} ${
+                    addressComponents!.find(
+                        (a: AddressComponent) => a.types.includes(AddressType.route))?.long_name
+                    }`,
             zipcode: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.postal_code))!.long_name,
             city: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.locality))!.long_name ?? addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.administrative_area_level_2))!.long_name,
             country: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.country))!.long_name,
         });
-        const poi = new PointOfInterest({...placeData, place_id: place.place_id, coordinates: `${placeData.geometry?.location.lat}, ${placeData.geometry?.location.lng}`})
-        poi.setAddress(address);
-        poi.tags = placeData.types as string[];
+        const poi = new PointOfInterest({...placeData, placeId: place.place_id, coordinates: `${placeData.geometry?.location.lat}, ${placeData.geometry?.location.lng}`})
+        poi.Address = address;
+        poi.Tags = placeData.types as string[];
 
         if (detailsResponse.result.photos && detailsResponse.result.photos[0]) {
-            poi.photo_id = detailsResponse.result.photos[0].photo_reference;
+            poi.PhotoId = detailsResponse.result.photos[0].photo_reference;
         }
        
         return poi;

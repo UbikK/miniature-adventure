@@ -1,5 +1,5 @@
-import { PointOfInterestDto } from "./poi.model.ts"
+import PointOfInterest from "./poi.model.ts"
 
 export type IInformationService = {
-    getPredictions: (input: string, coords: string) => Promise<PointOfInterestDto[]>
+    getPredictions: (input: string, coords: string) => Promise<PointOfInterest[]>
 }
