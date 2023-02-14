@@ -2,7 +2,8 @@
   "name": "miniature_adventure",
   "packageManager": "yarn@3.3.1",
   "workspaces": [
-    "packages/*"
+    "packages/app",
+    "packages/domain"
   ],
   "devDependencies": {
     "typescript": "beta"
