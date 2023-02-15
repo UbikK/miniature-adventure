@@ -38,16 +38,10 @@ export default class GoogleService implements IInformationService {
 
         const placeData = detailsResponse.result
 
-        const addressComponents = placeData.address_components;
+        const addressComponents: AddressComponent[] = placeData.address_components!;
 
         const address = new Address({
-            street: `${
-                addressComponents!.find(
-                    (a: AddressComponent) => a.types.includes(AddressType.street_number)
-                )?.long_name} ${
-                    addressComponents!.find(
-                        (a: AddressComponent) => a.types.includes(AddressType.route))?.long_name
-                    }`,
+            street:`${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.street_number))?.long_name} ${addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.route))?.long_name}`,
             zipcode: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.postal_code))!.long_name,
             city: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.locality))!.long_name ?? addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.administrative_area_level_2))!.long_name,
             country: addressComponents!.find((a: AddressComponent) => a.types.includes(AddressType.country))!.long_name,
